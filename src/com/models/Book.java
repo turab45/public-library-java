@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,75 @@ public class Book extends AbstractEntity{
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+	
+	
+	private List<Rent> rents;
+
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public String getBookImg() {
+		return bookImg;
+	}
+
+	public void setBookImg(String bookImg) {
+		this.bookImg = bookImg;
+	}
+
+	public Integer getNoOfCopies() {
+		return noOfCopies;
+	}
+
+	public void setNoOfCopies(Integer noOfCopies) {
+		this.noOfCopies = noOfCopies;
+	}
+
+	public Double getBookRent() {
+		return bookRent;
+	}
+
+	public void setBookRent(Double bookRent) {
+		this.bookRent = bookRent;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public List<Rent> getRents() {
+		return rents;
+	}
+
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
+	}
+	
+	
 	
 
 	

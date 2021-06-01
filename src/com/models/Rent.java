@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,11 @@ public class Rent extends AbstractEntity{
 	private Double totalRent;
 	@Column(name = "remarks")
 	private String remarks;
+	
+	
+	private List<Rent> rents;
+	
+	
 	public Integer getRentId() {
 		return rentId;
 	}
@@ -54,6 +61,12 @@ public class Rent extends AbstractEntity{
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public List<Rent> getRents() {
+		return rents;
+	}
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,8 @@ public class Author extends AbstractEntity{
 	
 	@Column(name = "no_of_publications")
 	private Integer noOfPublications;
+	
+	private List<Book> books;
 
 	public Integer getId() {
 		return id;
@@ -40,6 +44,14 @@ public class Author extends AbstractEntity{
 	public void setNoOfPublications(Integer noOfPublications) {
 		this.noOfPublications = noOfPublications;
 	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
+	
 	
 	
 	

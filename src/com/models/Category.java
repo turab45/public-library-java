@@ -1,10 +1,14 @@
 package com.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +23,9 @@ public class Category extends AbstractEntity{
 	@Column(name = "category")
 	private String categoryName;
 	
+	
+	private List<Book> books;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -30,6 +37,12 @@ public class Category extends AbstractEntity{
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 	
 	

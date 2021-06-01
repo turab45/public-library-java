@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,9 @@ public class User extends AbstractEntity{
 	private String email;
 	@Column(name = "password")
 	private String password;
+	
+	
+	private List<Rent> rents;
 
 	
 	public Integer getId() {
@@ -48,6 +53,12 @@ public class User extends AbstractEntity{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<Rent> getRents() {
+		return rents;
+	}
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
 	}
 	
 	
