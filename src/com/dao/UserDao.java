@@ -2,10 +2,12 @@ package com.dao;
 
 import java.util.List;
 
+import com.models.User;
+
 public interface UserDao {
-	public Integer addUser(UserDao user);
-	public Integer updateUser(UserDao user);
-	public Integer deleteUser(UserDao user);
+	public Integer addUser(User user);
+	public Integer updateUser(User user);
+	public Integer deleteUser(User user);
 	public Integer getUserIdByName(String name);
-	public List<UserDao> getAllUser();
+	public List<User> getAllUser();
 }

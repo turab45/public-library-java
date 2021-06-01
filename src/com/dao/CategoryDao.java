@@ -2,10 +2,12 @@ package com.dao;
 
 import java.util.List;
 
+import com.models.Category;
+
 public interface CategoryDao {
-	public Integer addCategory(CategoryDao category);
-	public Integer updateCategory(CategoryDao category);
-	public Integer deleteCategory(CategoryDao category);
+	public Integer addCategory(Category category);
+	public Integer updateCategory(Category category);
+	public Integer deleteCategory(Category category);
 	public Integer getCategoryIdByName(String name);
-	public List<CategoryDao> getAllCategory();
+	public List<Category> getAllCategory();
 }

@@ -2,10 +2,12 @@ package com.dao;
 
 import java.util.List;
 
+import com.models.Book;
+
 public interface BookDao {
-	public Integer addBook(BookDao book);
-	public Integer updateBook(BookDao book);
-	public Integer deleteBook(BookDao book);
+	public Integer addBook(Book book);
+	public Integer updateBook(Book book);
+	public Integer deleteBook(Book book);
 	public Integer getBookIdByName(String name);
-	public List<BookDao> getAllBook();
+	public List<Book> getAllBook();
 }
