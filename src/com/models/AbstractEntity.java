@@ -3,11 +3,14 @@ package com.models;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-public class AbstractEntity {
+@MappedSuperclass
+public abstract class AbstractEntity {
+	
 	@Column(name = "create_date")
 	@CreationTimestamp
 	private Date createDate;

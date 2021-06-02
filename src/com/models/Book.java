@@ -39,8 +39,7 @@ public class Book extends AbstractEntity{
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
-	
-	private List<Rent> rents;
+
 
 	public Integer getBookId() {
 		return bookId;
@@ -98,13 +97,7 @@ public class Book extends AbstractEntity{
 		this.category = category;
 	}
 
-	public List<Rent> getRents() {
-		return rents;
-	}
-
-	public void setRents(List<Rent> rents) {
-		this.rents = rents;
-	}
+	
 	
 	
 	

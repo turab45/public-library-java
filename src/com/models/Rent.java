@@ -29,7 +29,7 @@ public class Rent extends AbstractEntity{
 	private String remarks;
 	
 	
-	private List<Rent> rents;
+	//private List<RentDetails> rents;
 	
 	
 	public Integer getRentId() {
@@ -62,12 +62,7 @@ public class Rent extends AbstractEntity{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public List<Rent> getRents() {
-		return rents;
-	}
-	public void setRents(List<Rent> rents) {
-		this.rents = rents;
-	}
+	
 	
 	
 	

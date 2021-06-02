@@ -23,7 +23,7 @@ public class Category extends AbstractEntity{
 	@Column(name = "category")
 	private String categoryName;
 	
-	
+	@OneToMany(mappedBy="category")
 	private List<Book> books;
 	
 	public Integer getId() {
