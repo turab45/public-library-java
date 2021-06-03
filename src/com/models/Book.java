@@ -1,5 +1,6 @@
 package com.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "book")
-public class Book extends AbstractEntity{
+public class Book extends AbstractEntity implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_id")
@@ -95,6 +98,11 @@ public class Book extends AbstractEntity{
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	@Override
+	public String toString() {
+		return this.title ;
 	}
 
 	

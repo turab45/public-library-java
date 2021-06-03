@@ -1,5 +1,6 @@
 package com.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "author")
-public class Author extends AbstractEntity{
+public class Author extends AbstractEntity implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,10 @@ public class Author extends AbstractEntity{
 	}
 	public void setBooks(List<Book> books) {
 		this.books = books;
+	}
+	@Override
+	public String toString() {
+		return this.authorName;
 	}
 	
 	

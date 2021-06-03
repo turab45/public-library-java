@@ -7,10 +7,25 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: #ffffff;"><i class="fas fa-book"></i>Books</a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="table.jsp">View All</a><a class="dropdown-item" role="presentation" href="table.jsp">Rented Books</a></div>
+                    
+                    <li class="nav-item" role="presentation">
+                    	<a class="nav-link" href="book.jsp">
+                    		<i class="icon ion-person"></i>
+                    			<span>Books</span></a>
+                    				
                     </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i class="icon ion-person"></i><span>Author</span></a><a class="nav-link" href="profile.html"><i class="fas fa-align-justify"></i><span>Category</span></a><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>User</span></a></li>
+                    <li class="nav-item" role="presentation">
+                    	<a class="nav-link" href="author.jsp">
+                    		<i class="icon ion-person"></i>
+                    			<span>Authors</span></a>
+                    				<a class="nav-link" href="category.jsp">
+                    					<i class="fas fa-align-justify"></i>
+                    						<span>Categorys</span></a>
+                    						
+                    						<a class="nav-link" href="user.jsp">
+                    						<i class="fas fa-user"></i><span>Users</span>
+                    						</a>
+                    </li>
                     <li
                         class="nav-item" role="presentation" style="color: rgb(248,249,252);"></li>
                         <li class="nav-item" role="presentation"></li>

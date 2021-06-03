@@ -15,7 +15,7 @@
 
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Books</title>
+    <title>Category</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -39,11 +39,11 @@
 		<div class="container-fluid">
 			<div class="card shadow">
 				<div class="card-header py-3">
-					<p class="text-primary m-0 font-weight-bold">Books</p>
+					<p class="text-primary m-0 font-weight-bold">Category</p>
 				</div>
 				<div class="card-body">
 
-					<div id="BooksTableContainer"></div>
+					<div id="CategoryTableContainer"></div>
 
 				</div>
 			</div>
@@ -65,8 +65,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#BooksTableContainer').jtable({
-            title: 'Books Information',
+        $('#CategoryTableContainer').jtable({
+            title: 'Category Information',
             actions: {
                 listAction: "../AdminServlet?action=getAllBook",
                 createAction: './AdminServlet?action=create-book',
@@ -79,63 +79,42 @@
                     list: false
                 },
                 title: {
-                    title: 'Title',
+                    title: 'Name',
                     width: '20%',
                     create: true
                 },
                 author: {
-                    title: 'Author',
-                    type: "multiselectddl",
+                    title: 'Publications',
                     width: '20%',
-                    create: true,
-                    options: {
-                        empty: 'empty',
-                        yes: 'Yes',
-                        no: 'No'
-                    }
+                    create: true
                 },
                 category: {
-                    title: 'Category',
-                    type: "multiselectddl",
+                    title: 'created By',
                     width: '20%',
-                    create: true,
-                    options: {
-                        empty: 'empty',
-                        yes: 'Yes',
-                        no: 'No'
-                    },
                     create: true
                 },
                 rent: {
-                    title: 'Rent',
-                    type:'numeric',
+                    title: 'Created Date',
                     width: '20%',
                     create: true
                 },
-                copies: {
-                    title: 'Copies',
+                category: {
+                    title: 'Updated By',
                     width: '20%',
                     create: true
                 },
-                    image: {
-                        title: 'Image',
-                        list: true,
-                        create: true,
-                        edit: true,
-                        input: function(data) {
-                            html = '<input type ="file" id="bookImg" name="bookImg" accept="image/*" />';
-                            return html;
-                        }
-                    }
-            }
+                rent: {
+                    title: 'Updated Date',
+                    width: '20%',
+                    create: true
+                }
+                }
             
         });
         
-        $('#BooksTableContainer').jtable('load');
+        $('#CategoryTableContainer').jtable('load');
     });
 </script>
-
-
 
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.servlets;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,21 +61,26 @@ public class AdminServlet extends HttpServlet {
 				System.out.println(b.getCategory().getCategoryName());
 			}
 			
-			response.setContentType("javascript/json");
+			
+			response.setContentType("application/json");
 
 			String jsonList = gson.toJson(books);
+			
+			System.out.println(jsonList);
 
 			// Convert java object to json
-			JsonElement element = gson.toJsonTree(books, new TypeToken<List<Book>>() {
-			}.getType());
-			JsonArray jsonArray = element.getAsJsonArray();
-			listData = jsonArray.toString();
+//			JsonElement element = gson.toJsonTree(books, new TypeToken<List<Book>>() {
+//			}.getType());
+//			JsonArray jsonArray = element.getAsJsonArray();
+//			listData = jsonArray.toString();
 
 			// Return json in the format required by jTable plugin
 
-			listData = "{\"Result\":\"OK\", \"Records\":" + listData + "}";
+			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
+			
+			//System.out.println(listData);
 
-			response.getWriter().print(listData);
+			//response.getWriter().print(listData);
 
 			break;
 
@@ -123,5 +127,7 @@ public class AdminServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+
 
 }
