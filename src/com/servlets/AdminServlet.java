@@ -8,14 +8,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import com.dao.AuthorDao;
 import com.dao.BookDao;
+import com.dao.CategoryDao;
+import com.daoimpl.AuthorDaoImpl;
 import com.daoimpl.BookDaoImpl;
+import com.daoimpl.CategoryDaoImpl;
+import com.dto.AuthorDTO;
+import com.dto.BookDTO;
+import com.dto.CategoryDTO;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.models.Author;
 import com.models.Book;
+import com.models.Category;
+import com.transformers.AuthorTranformer;
+import com.transformers.BookDtoTransformer;
+import com.transformers.CategoryTransformer;
 
 
 /**
@@ -26,6 +37,8 @@ public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	BookDao bookDaoImpl = new BookDaoImpl();
+	AuthorDao authorDaoImpl = new AuthorDaoImpl();
+	CategoryDao categoryDaoImpl = new CategoryDaoImpl();
 	
 	
 
@@ -55,32 +68,22 @@ public class AdminServlet extends HttpServlet {
 		case "getAllBook":
 			List<Book> books = bookDaoImpl.getAllBook();
 			
-			for(Book b: books) {
-				System.out.println(b.getTitle());
-				System.out.println(b.getAuthor().getAuthorName());
-				System.out.println(b.getCategory().getCategoryName());
-			}
+			List<BookDTO> bookDTOs = BookDtoTransformer.toBookDTO(books);
+			
 			
 			
 			response.setContentType("application/json");
 
-			String jsonList = gson.toJson(books);
+			String jsonList = gson.toJson(bookDTOs);
 			
 			System.out.println(jsonList);
 
-			// Convert java object to json
-//			JsonElement element = gson.toJsonTree(books, new TypeToken<List<Book>>() {
-//			}.getType());
-//			JsonArray jsonArray = element.getAsJsonArray();
-//			listData = jsonArray.toString();
 
-			// Return json in the format required by jTable plugin
-
-			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
+			listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
 			
 			//System.out.println(listData);
 
-			//response.getWriter().print(listData);
+			response.getWriter().print(listData);
 
 			break;
 
@@ -111,6 +114,56 @@ public class AdminServlet extends HttpServlet {
 			break;
 
 		case "delete-book":
+
+			break;
+		case "getAllAuthors":
+			List<Author> authors = authorDaoImpl.getAllAuthor();
+			
+			List<String> authorStrings = new ArrayList<String>();
+			
+			for(Author author : authors) {
+				authorStrings.add(author.getAuthorName());
+			}
+			
+			
+			response.setContentType("application/json");
+
+			jsonList = gson.toJson(authorStrings);
+			
+			System.out.println(jsonList);
+
+
+			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
+			
+			//System.out.println(listData);
+
+			response.getWriter().print(jsonList);
+
+			break;
+			
+		case "getAllCategories":
+			List<Category> categories = categoryDaoImpl.getAllCategory();
+			
+			List<String> categoryStrings = new ArrayList<String>();
+			
+			for(Category category : categories) {
+				categoryStrings.add(category.getCategoryName());
+			}
+			
+			
+			
+			response.setContentType("application/json");
+
+			jsonList = gson.toJson(categoryStrings);
+			
+			System.out.println(jsonList);
+
+
+			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
+			
+			//System.out.println(listData);
+
+			response.getWriter().print(jsonList);
 
 			break;
 
