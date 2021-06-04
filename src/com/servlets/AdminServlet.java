@@ -28,19 +28,16 @@ import com.transformers.AuthorTranformer;
 import com.transformers.BookDtoTransformer;
 import com.transformers.CategoryTransformer;
 
-
 /**
  * Servlet implementation class AdminServlet
  */
 @WebServlet("/AdminServlet")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	BookDao bookDaoImpl = new BookDaoImpl();
 	AuthorDao authorDaoImpl = new AuthorDaoImpl();
 	CategoryDao categoryDaoImpl = new CategoryDaoImpl();
-	
-	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -58,54 +55,57 @@ public class AdminServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String action = request.getParameter("action");
-		
-		System.out.println("Action = "+action);
-		
+
+		System.out.println("Action = " + action);
+
 		Gson gson = new Gson();
 		String listData = "";
 
 		switch (action) {
 		case "getAllBook":
 			List<Book> books = bookDaoImpl.getAllBook();
-			
+
 			List<BookDTO> bookDTOs = BookDtoTransformer.toBookDTO(books);
-			
-			
-			
+
 			response.setContentType("application/json");
 
 			String jsonList = gson.toJson(bookDTOs);
-			
+
 			System.out.println(jsonList);
 
-
 			listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
-			
-			//System.out.println(listData);
+
+			// System.out.println(listData);
 
 			response.getWriter().print(listData);
 
 			break;
 
 		case "create-book":
+
+//			Book book = new Book();
+//
+//			book.setTitle(request.getParameter("title"));
+//			book.setBookRent(Double.parseDouble(request.getParameter("bookRent")));
 			
-			Book book = new Book();
+			String title = request.getParameter("title");
+			String auth = request.getParameter("author");
+			String cat = request.getParameter("category");
+			String rent = request.getParameter("bookRent");
 			
-			book.setTitle(request.getParameter("title"));
-			book.setBookRent(Double.parseDouble(request.getParameter("rent")));
-			
-			
+			System.out.println("Title : "+title+", Author: "+auth+", CAte : "+cat+", Rent:"+rent);
+
 			response.setContentType("javascript/json");
 
 			// Convert java object to json
 
-			//String json = gson.toJson(book);
+			// String json = gson.toJson(book);
 
 			// Return json in the format required by jTable plugin
 
-			//listData = "{\"Result\":\"OK\", \"Record\":" + json + "}";
+			// listData = "{\"Result\":\"OK\", \"Record\":" + json + "}";
 
-			//response.getWriter().print(listData);
+			// response.getWriter().print(listData);
 
 			break;
 
@@ -118,52 +118,50 @@ public class AdminServlet extends HttpServlet {
 			break;
 		case "getAllAuthors":
 			List<Author> authors = authorDaoImpl.getAllAuthor();
-			
-			List<String> authorStrings = new ArrayList<String>();
-			
-			for(Author author : authors) {
-				authorStrings.add(author.getAuthorName());
+
+			List<Option> authorStrings = new ArrayList<Option>();
+
+			for (Author author : authors) {
+				authorStrings.add(new Option(author.getAuthorName(), author.getId().toString()));
 			}
-			
-			
+
 			response.setContentType("application/json");
 
 			jsonList = gson.toJson(authorStrings);
-			
+
 			System.out.println(jsonList);
 
+			listData = "{\"Result\":\"OK\", \"Options\":" + jsonList + "}";
 
-			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
-			
-			//System.out.println(listData);
+			// System.out.println(listData);
 
-			response.getWriter().print(jsonList);
+			response.getWriter().print(listData);
 
 			break;
-			
+
 		case "getAllCategories":
 			List<Category> categories = categoryDaoImpl.getAllCategory();
-			
-			List<String> categoryStrings = new ArrayList<String>();
-			
-			for(Category category : categories) {
-				categoryStrings.add(category.getCategoryName());
+
+			List<Option> categoryStrings = new ArrayList<Option>();
+
+			for (Category category : categories) {
+				categoryStrings.add(new Option(category.getCategoryName(), category.getId().toString()));
 			}
 			
 			
-			
+		
+
 			response.setContentType("application/json");
 
 			jsonList = gson.toJson(categoryStrings);
-			
+
 			System.out.println(jsonList);
 
+			listData = "{\"Result\":\"OK\", \"Options\":" + jsonList + "}";
 
-			//listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
-			
-			//System.out.println(listData);
+			// System.out.println(listData);
 
-			response.getWriter().print(jsonList);
+			response.getWriter().print(listData);
 
 			break;
 
@@ -180,7 +178,33 @@ public class AdminServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
 
+}
+
+class Option {
+	private String DisplayText;
+	private String Value;
+
+	public Option(String displayText, String value) {
+		super();
+		DisplayText = displayText;
+		Value = value;
+	}
+
+	public String getDisplayText() {
+		return DisplayText;
+	}
+
+	public void setDisplayText(String displayText) {
+		DisplayText = displayText;
+	}
+
+	public String getValue() {
+		return Value;
+	}
+
+	public void setValue(String value) {
+		Value = value;
+	}
 
 }

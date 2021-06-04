@@ -72,15 +72,70 @@
 		$(document)
 				.ready(
 						function() {
+
+
+							// Read a page's GET URL variables and return them as an associative array.
+							function getVars(url)
+							{
+							    var formData = new FormData();
+							    var split;
+							    $.each(url.split("&"), function(key, value) {
+							        split = value.split("=");
+							        formData.append(split[0], decodeURIComponent(split[1].replace(/\+/g, " ")));
+							    });
+
+							    return formData;
+							}
+
+							// Variable to store your files
+							var files;
+
+							$( document ).delegate('#input-image','change', prepareUpload);
+
+							// Grab the files and set them to our variable
+							function prepareUpload(event)
+							{
+							    files = event.target.files;
+							}
+														
+										 
+								}
+
 							$('#BooksTableContainer')
 									.jtable(
 											{
 												title : 'Books Information',
 												actions : {
 													listAction : "../AdminServlet?action=getAllBook",
-													createAction : './AdminServlet?action=create-book',
-													updateAction : '#',
-													deleteAction : '#'
+													createAction : "../AdminServlet?action=create-book",
+													
+													
+									                updateAction: function (postData) {
+									                    var formData = getVars(postData);
+
+									                    if($('#input-image').val() !== ""){
+									                        formData.append("userfile", $('#input-image').get(0).files[0]);
+									                    }
+
+									                    return $.Deferred(function ($dfd) {
+									                        $.ajax({
+									                            url: '../AdminServlet?action=update-book',
+									                            type: 'POST',
+									                            dataType: 'json',
+									                            data: formData,
+									                            processData: false, // Don't process the files
+									                            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+									                            success: function (data) {
+									                                $dfd.resolve(data);
+									                                $('#table-container').jtable('load');
+									                            },
+									                            error: function () {
+									                                $dfd.reject();
+									                            }
+									                        });
+									                    });
+									                },
+													deleteAction : './AdminServlet?action=deleteBook'
 												},
 												fields : {
 													id : {
@@ -93,8 +148,8 @@
 														edit : false,
 														create : false,
 														display : function(data) {
-															//return '<img src=' + data.record.bookImg + ' />';
-															return "img";
+															return '<img src=../Book_Images/' + data.record.bookImg + ' height="30px" width="30px"/>';
+															//return "img";
 														}
 													},
 													title : {
@@ -107,7 +162,7 @@
 														type : "multiselectddl",
 														width : '20%',
 														create : true,
-														options : 'http://localhost:8080/public-library/AdminServlet?action=getAllAuthors',
+														options :'http://localhost:8080/public-library/AdminServlet?action=getAllAuthors',
 														display: function(data){
 															return data.record.author.authorName;
 															}
@@ -141,14 +196,18 @@
 														create : true,
 														edit : true,
 														input : function(data) {
-															html = '<input type ="file" id="bookImg" name="bookImg" accept="image/*" />';
+															 html = '<input type ="file" id="input-image" name="userfile" accept="image/*" />';
 															return html;
-														}
+															
+														},
+														onSuccess: uploadFile()
 													}
 												}
 
 											});
 
+							
+							
 							$('#BooksTableContainer').jtable('load');
 						});
 	</script>
