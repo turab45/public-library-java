@@ -77,9 +77,13 @@ public class AdminServlet extends HttpServlet {
 
 			System.out.println(jsonList);
 
-			listData = "{\"draw\":\" 1\",\"recordsTotal\":"+bookDTOs.size()+",\"recordsFiltered\":"+bookDTOs.size()+",\"data\":"+jsonList+"}";
+			//listData = "{\"draw\":\" 1\",\"recordsTotal\":"+bookDTOs.size()+",\"recordsFiltered\":"+bookDTOs.size()+",\"data\":"+jsonList+"}";
 				    
-			response.getWriter().print(listData);
+		//listData = "{\"Result\":\"OK\", \"Options\":" + jsonList + "}";
+
+			// System.out.println(listData);
+
+			response.getWriter().print(jsonList);
 
 			break;
 

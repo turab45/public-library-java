@@ -57,25 +57,76 @@
 					<p class="text-primary m-0 font-weight-bold">Books</p>
 				</div>
 				<div class="card-body">
-				<div style="margin-bottom: 15px;">
-				
-				<form>
-                                            <div class="form-row">
+				<div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="row mb-3">
+                        <div class="col-lg-4">
+                            <div class="card mb-3">
+                                <div class="card-body text-center shadow"><img class="img-thumbnail mb-3 mt-4" src="/dogs/image2.jpeg" width="160" height="160">
+                                    <div class="mb-3"><input type="file"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row mb-3 d-none">
+                                <div class="col">
+                                    <div class="card text-white bg-primary shadow">
+                                        <div class="card-body">
+                                            <div class="row mb-2">
                                                 <div class="col">
-                                                    <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="user.name" name="username"></div>
+                                                    <p class="m-0">Peformance</p>
+                                                    <p class="m-0"><strong>65.2%</strong></p>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" placeholder="user@example.com" name="email"></div>
-                                                </div>
+                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
                                             </div>
-                                            <div class="form-row">
+                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card text-white bg-success shadow">
+                                        <div class="card-body">
+                                            <div class="row mb-2">
                                                 <div class="col">
-                                                    <div class="form-group"><label for="first_name"><strong>Password</strong><br></label><input class="form-control" type="password" placeholder="Password" style="height: 38px;width: 277px;"></div>
+                                                    <p class="m-0">Peformance</p>
+                                                    <p class="m-0"><strong>65.2%</strong></p>
                                                 </div>
+                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
                                             </div>
-                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" style="width: 99px;">Save</button></div>
+                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow mb-3"></div>
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <div class="form-group"><label for="city"><strong>Title</strong></label><input class="form-control" type="text" name="city"></div>
+                                                        <div class="form-group"><label for="city"><strong>Author</strong></label><select class="form-control"><optgroup label="Select Author"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                                        <div
+                                                            class="form-group"><label for="city"><strong>Rent</strong></label><input class="form-control" type="number"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="country"><strong>Copies</strong></label><input class="form-control" type="number"></div>
+                                                    <div class="form-group"><label for="country"><strong>Category</strong></label><select class="form-control"><optgroup label="Select Category"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                                </div>
+                                        </div>
+                                        <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Save&nbsp;</button></div>
                                         </form>
-				</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 				
 					<table id="book_table" >
 
