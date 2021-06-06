@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import com.dao.AuthorDao;
 import com.dao.BookDao;
 import com.dao.CategoryDao;
@@ -55,8 +57,10 @@ public class AdminServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String action = request.getParameter("action");
+		
 
 		System.out.println("Action = " + action);
+		
 
 		Gson gson = new Gson();
 		String listData = "";
@@ -73,10 +77,8 @@ public class AdminServlet extends HttpServlet {
 
 			System.out.println(jsonList);
 
-			listData = "{\"Result\":\"OK\", \"Records\":" + jsonList + "}";
-
-			// System.out.println(listData);
-
+			listData = "{\"draw\":\" 1\",\"recordsTotal\":"+bookDTOs.size()+",\"recordsFiltered\":"+bookDTOs.size()+",\"data\":"+jsonList+"}";
+				    
 			response.getWriter().print(listData);
 
 			break;
@@ -88,12 +90,13 @@ public class AdminServlet extends HttpServlet {
 //			book.setTitle(request.getParameter("title"));
 //			book.setBookRent(Double.parseDouble(request.getParameter("bookRent")));
 			
-			String title = request.getParameter("title");
-			String auth = request.getParameter("author");
-			String cat = request.getParameter("category");
-			String rent = request.getParameter("bookRent");
+			String title = request.getParameter("first");
+			String auth = request.getParameter("middle");
+			String cat = request.getParameter("last");
+			String rent = request.getParameter("image");
 			
-			System.out.println("Title : "+title+", Author: "+auth+", CAte : "+cat+", Rent:"+rent);
+			
+			System.out.println("First : "+title+", Middle: "+auth+", Last : "+cat+", Image:"+rent);
 
 			response.setContentType("javascript/json");
 

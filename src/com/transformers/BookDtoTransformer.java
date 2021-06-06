@@ -18,6 +18,7 @@ public class BookDtoTransformer {
 			bookDTO.setTitle(book.getTitle());
 		}
 		if (book.getBookImg() != null) {
+			
 			bookDTO.setBookImg(book.getBookImg());
 		}
 		if (book.getBookRent() != null) {

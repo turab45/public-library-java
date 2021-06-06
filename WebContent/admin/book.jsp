@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@page import="com.transformers.BookDtoTransformer"%>
+<%@page import="com.daoimpl.BookDaoImpl"%>
+<%@page import="com.dao.BookDao"%>
+<%@page import="com.dto.BookDTO"%>
+<%@page import="java.util.List"%>
 <html>
 <head>
 
@@ -28,11 +33,16 @@
 <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
 
 
-<script src="assets/js/chart.min.js"></script>
-<script src="assets/js/bs-init.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-<script src="assets/js/theme.js"></script>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+
+
+<%
+		BookDao bookDaoImpl = new BookDaoImpl();
+		List<BookDTO> bookDTOs = BookDtoTransformer.toBookDTO(bookDaoImpl.getAllBook());
+
+%>
 
 </head>
 <body>
@@ -47,10 +57,47 @@
 					<p class="text-primary m-0 font-weight-bold">Books</p>
 				</div>
 				<div class="card-body">
-
-					<div id="BooksTableContainer"></div>
-
+				<div style="margin-bottom: 15px;">
+				
+				<form>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="user.name" name="username"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" placeholder="user@example.com" name="email"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-group"><label for="first_name"><strong>Password</strong><br></label><input class="form-control" type="password" placeholder="Password" style="height: 38px;width: 277px;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" style="width: 99px;">Save</button></div>
+                                        </form>
 				</div>
+				
+					<table id="book_table" >
+
+						<thead>
+							<tr>
+								<th width="15%">Image</th>
+								<th width="30%">Title</th>
+								<th width="30%">Author</th>
+								<th width="15%">Category</th>
+								<th width="10%">Rent</th>
+								<th width="10%">Copies</th>
+								<th width="5%" >Edit</th>
+								<th width="5%" >Delete</th>
+								
+							</tr>
+						</thead>
+						
+						
+					</table>
+					
+					</div>
+				
 			</div>
 		</div>
 	</div>
@@ -61,158 +108,138 @@
 			</div>
 		</div>
 	</footer>
-	</div>
+	
 	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
 		class="fas fa-angle-up"></i></a>
-	</div>
+	
 
 
+<div id="userModal" class="modal fade">
+ <div class="modal-dialog">
+  <form method="post" id="user_form" enctype="multipart/form-data">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal">&times;</button>
+     <h4 class="modal-title">Add User</h4>
+    </div>
+    <div class="modal-body">
+     <label>Enter First Name</label>
+     <input type="text" name="first_name" id="first_name" class="form-control" />
+     <br />
+     <label>Enter Last Name</label>
+     <input type="text" name="last_name" id="last_name" class="form-control" />
+     <br />
+     <label>Select User Image</label>
+     <input type="file" name="user_image" id="user_image" />
+     <span id="user_uploaded_image"></span>
+    </div>
+    <div class="modal-footer">
+     <input type="hidden" name="user_id" id="user_id" />
+     <input type="hidden" name="operation" id="operation" />
+     <input type="submit" name="action" id="action" class="btn btn-success" value="Add" />
+     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+   </div>
+  </form>
+ </div>
+</div>
 
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
+
+	
+
+	var editor; // use a global for the submit and return data rendering in the examples
+	 
+	$(document).ready(function() {
+
+		$('#book_table').DataTable({
+			"searching":true,
+			"ordering":false,
+			"processing": true,
+		    "serverSide": true,
+		    "ajax":{
+					url:"../AdminServlet?action=getAllBook",
+					type: "GET"
+			    },
+			    "columns": [
+		            { "data": "bookImg"},
+		            { "data": "title" },
+		            { "data": "author.authorName" },
+		            { "data": "category.categoryName" },
+		            { "data": "bookRent" },
+		            { "data": "noOfCopies" }
+		        ],
+		        "columnDefs": [ {
+		            "targets": 0,
+		            "data": "bookImg", // Use the full data source object for the renderer's source
+		            "render": function(data, type, row, meta){
+							return '<img src="../WebContent/uploads/'+data+'" height="30px" width="30px"></img>'
+			            }
+		          },{
+			            "targets": 6,
+			            "data": "bookId", // Use the full data source object for the renderer's source
+			            "render": function(data, type, row, meta){
+								return '<button name="update" id="'+data+'" class="btn btn-warning btn-xs update">Edit</button>'
+				            }
+			          },
+			          {
+				            "targets": 7,
+				            "data": "bookId", // Use the full data source object for the renderer's source
+				            "render": function(data, type, row, meta){
+									return '<button name="delete" id="'+data+'" class="btn btn-danger btn-xs delete">Delete</button>'
+					            }
+				          },
+		           ],
+		           
+		    });
 
 
-							// Read a page's GET URL variables and return them as an associative array.
-							function getVars(url)
-							{
-							    var formData = new FormData();
-							    var split;
-							    $.each(url.split("&"), function(key, value) {
-							        split = value.split("=");
-							        formData.append(split[0], decodeURIComponent(split[1].replace(/\+/g, " ")));
-							    });
 
-							    return formData;
-							}
+		 $(document).on('submit', '#user_form', function(event){
+		  event.preventDefault();
+		  var firstName = $('#first_name').val();
+		  var lastName = $('#last_name').val();
+		  var extension = $('#user_image').val().split('.').pop().toLowerCase();
+		  if(extension != '')
+		  {
+		   if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
+		   {
+		    alert("Invalid Image File");
+		    $('#user_image').val('');
+		    return false;
+		   }
+		  } 
+		  if(firstName != '' && lastName != '')
+		  {
+		   $.ajax({
+		    url:"insert.php",
+		    method:'POST',
+		    data:new FormData(this),
+		    contentType:false,
+		    processData:false,
+		    success:function(data)
+		    {
+		     alert(data);
+		     $('#user_form')[0].reset();
+		     $('#userModal').modal('hide');
+		     dataTable.ajax.reload();
+		    }
+		   });
+		  }
+		  else
+		  {
+		   alert("Both Fields are Required");
+		  }
+		 });
 
-							// Variable to store your files
-							var files;
-
-							$( document ).delegate('#input-image','change', prepareUpload);
-
-							// Grab the files and set them to our variable
-							function prepareUpload(event)
-							{
-							    files = event.target.files;
-							}
-														
-										 
-								}
-
-							$('#BooksTableContainer')
-									.jtable(
-											{
-												title : 'Books Information',
-												actions : {
-													listAction : "../AdminServlet?action=getAllBook",
-													createAction : "../AdminServlet?action=create-book",
-													
-													
-									                updateAction: function (postData) {
-									                    var formData = getVars(postData);
-
-									                    if($('#input-image').val() !== ""){
-									                        formData.append("userfile", $('#input-image').get(0).files[0]);
-									                    }
-
-									                    return $.Deferred(function ($dfd) {
-									                        $.ajax({
-									                            url: '../AdminServlet?action=update-book',
-									                            type: 'POST',
-									                            dataType: 'json',
-									                            data: formData,
-									                            processData: false, // Don't process the files
-									                            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-									                            success: function (data) {
-									                                $dfd.resolve(data);
-									                                $('#table-container').jtable('load');
-									                            },
-									                            error: function () {
-									                                $dfd.reject();
-									                            }
-									                        });
-									                    });
-									                },
-													deleteAction : './AdminServlet?action=deleteBook'
-												},
-												fields : {
-													id : {
-														key : true,
-														list : false
-													},
-													Photo : {
-														title : "Image",
-														width : '20%',
-														edit : false,
-														create : false,
-														display : function(data) {
-															return '<img src=../Book_Images/' + data.record.bookImg + ' height="30px" width="30px"/>';
-															//return "img";
-														}
-													},
-													title : {
-														title : 'Title',
-														width : '20%',
-														create : true
-													},
-													author : {
-														title : 'Author',
-														type : "multiselectddl",
-														width : '20%',
-														create : true,
-														options :'http://localhost:8080/public-library/AdminServlet?action=getAllAuthors',
-														display: function(data){
-															return data.record.author.authorName;
-															}
-														
-													},
-													category : {
-														title : 'Category',
-														type : "multiselectddl",
-														width : '20%',
-														create : true,
-														options :'http://localhost:8080/public-library/AdminServlet?action=getAllCategories',
-														create : true,
-														display: function(data){
-															return data.record.category.categoryName;
-															}
-													},
-													bookRent : {
-														title : 'Rent',
-														type : 'numeric',
-														width : '20%',
-														create : true
-													},
-													noOfCopies : {
-														title : 'Copies',
-														width : '20%',
-														create : true
-													},
-													bookImg : {
-														title : 'Image',
-														list : false,
-														create : true,
-														edit : true,
-														input : function(data) {
-															 html = '<input type ="file" id="input-image" name="userfile" accept="image/*" />';
-															return html;
-															
-														},
-														onSuccess: uploadFile()
-													}
-												}
-
-											});
-
-							
-							
-							$('#BooksTableContainer').jtable('load');
-						});
+	} );
 	</script>
-
-
+	
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 </body>
 </html>
