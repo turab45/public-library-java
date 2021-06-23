@@ -1,5 +1,37 @@
 $(document).ready(function() {
 
+	
+	
+	var categoryOptions=[];
+	var authorOptions = [];
+
+	
+
+	  $.ajax({
+	    url: './AdminServlet?action=getAllCategories',
+	    async:true,
+	    dataType: "json", 
+	    success: function(data)
+	     { 
+	    	categoryOptions = categoryOptions.concat(data);
+	    	console.log(categoryOptions)
+	     }
+	  });
+	
+
+
+		  $.ajax({
+		    url: './AdminServlet?action=getAllAuthor',
+		    async:true,
+		    dataType: "json", 
+		    success: function(data)
+		     { 
+		    	authorOptions =authorOptions.concat(data);
+		     }
+		  });
+		
+	
+	
   var columnDefs = [
   {
     data: "title",
@@ -7,15 +39,16 @@ $(document).ready(function() {
   },
   {
 	    data: "author.authorName",
-	    title: "Author"
+	    title: "Author",
+	    type: "select",
+	    options:authorOptions,
 	  },
 	  {
 		    data: "category.categoryName",
 		    title: "Category",
 		    type:'select',
-		    options:{
-		    	"a":"A", "b":"B", "c":"C"
-		    }
+		    options : categoryOptions,
+		    select2 : { width: "100%"},
 		  },
  {
     data: "bookRent",
@@ -36,11 +69,6 @@ $(document).ready(function() {
   // local URL's are not allowed
   var url_ws_mock_get = './AdminServlet?action=getAllBook';
   var url_ws_mock_ok = './mock_svc_ok.json';
-  if (location.href.startsWith("file://")) {
-    // local URL's are not allowed
-    url_ws_mock_get = 'https://luca-vercelli.github.io/DataTable-AltEditor/example/10_file_upload/mock_svc_load.json';
-    url_ws_mock_ok = 'https://luca-vercelli.github.io/DataTable-AltEditor/example/10_file_upload/mock_svc_ok.json';
-  }
   
   myTable = $('#example').DataTable({
     "sPaginationType": "full_numbers",
@@ -52,7 +80,6 @@ $(document).ready(function() {
     columns: columnDefs,
     dom: 'Bfrtip',        // Needs button container
     select: 'single',
-    altEditor:true,
     responsive: true,
     altEditor: true,     // Enable altEditor
     buttons: [{

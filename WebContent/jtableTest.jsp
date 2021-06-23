@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.css" />
 
 </head>
 
@@ -32,6 +33,7 @@
 <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.js" ></script>
 <script src="dataTables.altEditor.free.js" ></script>
 <script src="script.js" ></script>
 

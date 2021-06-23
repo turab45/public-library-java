@@ -124,21 +124,14 @@ public class AdminServlet extends HttpServlet {
 
 			break;
 		case "getAllAuthors":
-			List<Author> authors = authorDaoImpl.getAllAuthor();
-
-			List<Option> authorStrings = new ArrayList<Option>();
-
-			for (Author author : authors) {
-				authorStrings.add(new Option(author.getAuthorName(), author.getId().toString()));
-			}
 
 			response.setContentType("application/json");
 
-			jsonList = gson.toJson(authorStrings);
+			//jsonList = gson.toJson(authorStrings);
 
-			System.out.println(jsonList);
+			//System.out.println(jsonList);
 
-			listData = "{\"Result\":\"OK\", \"Options\":" + jsonList + "}";
+			//listData = "{\"Options\":" + jsonList + "}";
 
 			// System.out.println(listData);
 
@@ -149,26 +142,29 @@ public class AdminServlet extends HttpServlet {
 		case "getAllCategories":
 			List<Category> categories = categoryDaoImpl.getAllCategory();
 
-			List<Option> categoryStrings = new ArrayList<Option>();
-
-			for (Category category : categories) {
-				categoryStrings.add(new Option(category.getCategoryName(), category.getId().toString()));
+			List<CategoryDTO> categoryDTOs = CategoryTransformer.tocategoryDTO(categories);
+			
+			
+			List<String> categoriesFormatted = new ArrayList<String>();
+			
+			for (CategoryDTO categ: categoryDTOs) {
+				categoriesFormatted.add(categ.getCategoryName());
+				
 			}
 			
-			
-		
 
 			response.setContentType("application/json");
-
-			jsonList = gson.toJson(categoryStrings);
+			
+			jsonList = gson.toJson(categoriesFormatted);
+			
 
 			System.out.println(jsonList);
 
-			listData = "{\"Result\":\"OK\", \"Options\":" + jsonList + "}";
+			
 
 			// System.out.println(listData);
 
-			response.getWriter().print(listData);
+			response.getWriter().print(jsonList);
 
 			break;
 
@@ -185,33 +181,6 @@ public class AdminServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
-}
-
-class Option {
-	private String DisplayText;
-	private String Value;
-
-	public Option(String displayText, String value) {
-		super();
-		DisplayText = displayText;
-		Value = value;
-	}
-
-	public String getDisplayText() {
-		return DisplayText;
-	}
-
-	public void setDisplayText(String displayText) {
-		DisplayText = displayText;
-	}
-
-	public String getValue() {
-		return Value;
-	}
-
-	public void setValue(String value) {
-		Value = value;
-	}
-
+	
+	
 }

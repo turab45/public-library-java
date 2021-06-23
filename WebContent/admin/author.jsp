@@ -3,37 +3,38 @@
 <head>
 
 
-<!-- Include all css files  -->
-
-<link href="jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
-<link href="jtable/themes/metro/blue/jtable.css" rel="stylesheet" type="text/css">
-
-<!-- Include all js files  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="jtable/jquery.jtable.min.js" type="text/javascript"></script>
-
 <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Author</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
-    
-    
-    
-<script src="assets/js/chart.min.js"></script>
-<script src="assets/js/bs-init.js"></script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Author</title>
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="assets/fonts/material-icons.min.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-<script src="assets/js/theme.js"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
 
-<div id="wrapper">
+	<div id="wrapper">
 
 		<jsp:include page="navbar.jsp" />
 
@@ -44,7 +45,35 @@
 				</div>
 				<div class="card-body">
 
-					<div id="AuthorTableContainer"></div>
+
+
+
+
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#exampleModal" data-whatever="@mdo">New</button>
+					<div class="table-responsive-sm">
+						<table class="table">
+							<table class="table table-sm" id="authorTable">
+								<thead>
+									<tr>
+										
+										<th scope="col">Name</th>
+										<th scope="col">Publications</th>
+										<th scope="col">Created By</th>
+										<th scope="col">Create Date</th>
+										<th scope="col">Updated By</th>
+										<th scope="col">update Date</th>
+										<th scope="col" colspan="2">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</table>
+					</div>
+
+
 
 				</div>
 			</div>
@@ -66,59 +95,73 @@
 
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#AuthorTableContainer').jtable({
-            title: 'Author Information',
-            actions: {
-                listAction: "../AdminServlet?action=getAllBook",
-                createAction: './AdminServlet?action=create-book',
-                updateAction: '#',
-                deleteAction: '#'
-            },
-            fields: {
-                id: {
-                    key: true,
-                    list: false
-                },
-                title: {
-                    title: 'Name',
-                    width: '20%',
-                    create: true
-                },
-                author: {
-                    title: 'Publications',
-                    width: '20%',
-                    create: true
-                },
-                category: {
-                    title: 'created By',
-                    width: '20%',
-                    create: true
-                },
-                rent: {
-                    title: 'Created Date',
-                    width: '20%',
-                    create: true
-                },
-                category: {
-                    title: 'Updated By',
-                    width: '20%',
-                    create: true
-                },
-                rent: {
-                    title: 'Updated Date',
-                    width: '20%',
-                    create: true
-                }
-                }
-            
-        });
-        
-        $('#AuthorTableContainer').jtable('load');
-    });
-</script>
 
+
+	<script>
+		$(document).ready(function(){
+
+	
+			$('#updateBtn').hide();
+
+			$.ajax({
+
+						url : '../AuthorServletAdmin?action=getAll',
+						type : 'GET',
+						success : function(data) {
+							for (var i = 0; i < data.length; i++) {
+								$('#authorTable').append('<tr id='+data[i].id+'><td data-target=name>'+ data[i].authorName+'</td><td data-target=publications>'+data[i].noOfPublications+ '</td><td>'+data[i].createdBy+ '</td><td>'+data[i].createDate+ '</td><td>'+data[i].updatedBy+ '</td><td data-target=publications>'+data[i].updateDate+ '</td><td> <a class="edit" data-id='+data[i].id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete" data-id='+data[i].id+' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+
+								console.log(data[i].authorName);
+
+								}
+
+						}
+
+					});
+			
+			});
+	</script>
 
 </body>
 </html>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Create Author</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="post" id="author_form">
+				<div class="modal-body">
+
+
+					<div class="form-group">
+						<label for="recipient-name" class="col-form-label">Author
+							Name</label> <input type="text" class="form-control" id="author_name">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="col-form-label"
+							data-toggle="tooltip" data-placement="top"
+							title="No of publications">Publications</label> <input
+							type="number" class="form-control" id="publications">
+					</div>
+
+
+
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button type="button" id="closeBtn" class="btn btn-secondary"
+					data-dismiss="modal">Close</button>
+				<button type="button" id="addBtn" class="btn btn-primary">Save</button>
+				<button type="button" id="updateBtn" class="btn btn-primary">Update</button>
+			</div>
+
+		</div>
+	</div>
+</div>
