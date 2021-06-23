@@ -42,6 +42,10 @@ public class AuthorServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String jsonlist = "";
 		
+		String name = null;
+		Integer id = null;
+		Integer noOfPublications = null;
+		
 		switch (action) {
 		case "getAll":
 			
@@ -56,8 +60,26 @@ public class AuthorServlet extends HttpServlet {
 			response.getWriter().print(jsonlist);
 			break;
 
-		default:
+		case "create":
+			name = request.getParameter("name");
+			noOfPublications = Integer.parseInt(request.getParameter("publications"));
+			
+			Author author = new Author();
+			author.setAuthorName(name);
+			author.setNoOfPublications(noOfPublications);
+			author.setStatus(1);
+			
+			authorDaoImpl.addAuthor(author);
+			
+			author = authorDaoImpl.getAuthorById(authorDaoImpl.getAuthorIdByName(name));
+			AuthorDTO authorDTO = authorTranformer.toAuthorDTO(author);
+			
+			jsonlist = gson.toJson(authorDTO);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
 			break;
+			
 		}
 	}
 

@@ -9,6 +9,7 @@ public interface AuthorDao {
 	public Integer updateAuthor(Author author);
 	public Integer deleteAuthor(Author author);
 	public Integer getAuthorIdByName(String name);
+	public Author getAuthorById(Integer id);
 	public List<Author> getAllAuthor();
 
 }

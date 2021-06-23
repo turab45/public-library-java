@@ -22,15 +22,23 @@ public class AuthorTranformer {
 		}
 		if (author.getCreateDate() != null) {
 			authorDTO.setCreateDate(author.getCreateDate().toString());
+		}else {
+			authorDTO.setCreatedBy("--");
 		}
 		if (author.getCreatedBy() != null) {
 			authorDTO.setCreatedBy(author.getCreatedBy().toString());
+		}else {
+			authorDTO.setCreatedBy("--");
 		}
 		if (author.getUpdateDate() != null) {
 			authorDTO.setUpdateDate(author.getUpdateDate().toString());
+		}else {
+			authorDTO.setUpdateDate("--");
 		}
 		if (author.getUpdatedBy() != null) {
 			authorDTO.setUpdatedBy(author.getUpdatedBy().toString());
+		}else {
+			authorDTO.setUpdatedBy("--");
 		}
 		
 		return authorDTO;

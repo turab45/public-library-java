@@ -18,7 +18,10 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
 <script
@@ -29,7 +32,6 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -102,6 +104,7 @@
 
 	
 			$('#updateBtn').hide();
+			$('.alert').alert('close')
 
 			$.ajax({
 
@@ -118,6 +121,34 @@
 						}
 
 					});
+
+			$('#closeBtn').on('click', function(){
+				$('#author_form')[0].reset();
+				
+			});
+
+		$('#addBtn').on('click', function(){
+			var name = $('#author_name').val();
+			var publications = $('#publications').val();
+			$.ajax({
+				url:'../AuthorServletAdmin?action=create&&name='+name+'&&publications='+publications,
+				type: "POST",
+				success:function(data){
+
+					$('#exampleModal').modal('hide');
+					$('#author_form')[0].reset();
+					
+					$('#authorTable').append('<tr id='+data.id+'><td data-target=name>'+ data.authorName+'</td><td data-target=publications>'+data.noOfPublications+ '</td><td>'+data.createdBy+ '</td><td>'+data.createDate+ '</td><td>'+data.updatedBy+ '</td><td>'+data.updateDate+ '</td><td> <a class="edit" data-id='+data.id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete" data-id='+data.id+' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+
+					$('.alert').alert()
+							
+							
+							
+							
+					},
+
+				});
+		});
 			
 			});
 	</script>
@@ -164,4 +195,13 @@
 
 		</div>
 	</div>
+</div>
+
+<div class="fixed-top">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 </div>

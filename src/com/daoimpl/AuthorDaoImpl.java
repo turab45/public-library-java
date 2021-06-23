@@ -102,7 +102,7 @@ public class AuthorDaoImpl implements AuthorDao{
 
 			Transaction transaction = session.beginTransaction();
 
-			Author author  = (Author) session.createQuery("from Author where authorName='"+name+"'");
+			Author author  = (Author) session.createQuery("from Author where authorName='"+name+"'").getSingleResult();
 
 			row = author.getId();
 			
@@ -142,6 +142,32 @@ public class AuthorDaoImpl implements AuthorDao{
 			ex.printStackTrace();
 		}
 		return allAuthor;
+	}
+
+	@Override
+	public Author getAuthorById(Integer id) {
+		Author author = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+
+			author  = (Author) session.get(Author.class, id);
+
+			
+			
+			transaction.commit();
+			System.out.println("Successfully fetched author id by name.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return author;
 	}
 
 }
