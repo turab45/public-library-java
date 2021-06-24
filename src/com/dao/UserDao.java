@@ -9,5 +9,6 @@ public interface UserDao {
 	public Integer updateUser(User user);
 	public Integer deleteUser(User user);
 	public Integer getUserIdByName(String name);
+	public User getUserById(Integer id);
 	public List<User> getAllUser();
 }

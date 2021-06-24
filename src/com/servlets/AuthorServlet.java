@@ -10,17 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.smartcardio.CardException;
 
+import org.apache.catalina.valves.rewrite.RewriteCond;
+
 import com.dao.AuthorDao;
 import com.dao.CategoryDao;
+import com.dao.UserDao;
 import com.daoimpl.AuthorDaoImpl;
 import com.daoimpl.CategoryDaoImpl;
+import com.daoimpl.UserDaoImpl;
 import com.dto.AuthorDTO;
 import com.dto.CategoryDTO;
+import com.dto.UserDTO;
 import com.google.gson.Gson;
 import com.models.Author;
 import com.models.Category;
+import com.models.User;
 import com.transformers.AuthorTranformer;
 import com.transformers.CategoryTransformer;
+import com.transformers.UserTransformer;
 
 /**
  * Servlet implementation class AuthorServlet
@@ -32,6 +39,7 @@ public class AuthorServlet extends HttpServlet {
 	AuthorDao authorDaoImpl = new AuthorDaoImpl();
     AuthorTranformer authorTranformer = new AuthorTranformer();
     CategoryDao categoryDaoImpl = new CategoryDaoImpl();
+    UserDao userDaoImpl = new UserDaoImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -181,6 +189,78 @@ public class AuthorServlet extends HttpServlet {
 			
 			categoryDTO = CategoryTransformer.toCategoryDTO(category);
 			jsonlist = gson.toJson(categoryDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "getAll-users":
+			List<UserDTO> allUsers = UserTransformer.toUserDTO(userDaoImpl.getAllUser());
+			
+			jsonlist = gson.toJson(allUsers);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "create-user":
+			name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			
+			User user = new User();
+			user.setUserName(name);
+			user.setEmail(email);
+			user.setPassword(password);
+			user.setStatus(1);
+			
+			userDaoImpl.addUser(user);
+			
+			user = userDaoImpl.getUserById(userDaoImpl.getUserIdByName(user.getUserName()));
+			UserDTO userDTO = UserTransformer.toUserDTO(user);
+			
+			jsonlist = gson.toJson(userDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "update-user":
+			id = Integer.parseInt(request.getParameter("id"));
+			name = request.getParameter("name");
+			email = request.getParameter("email");
+			password = request.getParameter("password");
+			
+			user = userDaoImpl.getUserById(id);
+			user.setUserName(name);
+			user.setEmail(email);
+			user.setPassword(password);
+			
+			userDaoImpl.updateUser(user);
+			
+			
+			userDTO = UserTransformer.toUserDTO(user);
+			
+			jsonlist = gson.toJson(userDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+		case "delete-user":
+			id = Integer.parseInt(request.getParameter("id"));
+	
+			user = userDaoImpl.getUserById(id);
+			
+			userDaoImpl.deleteUser(user);
+			
+			
+			userDTO = UserTransformer.toUserDTO(user);
+			
+			jsonlist = gson.toJson(userDTO);
 			
 			response.setContentType("application/json");
 			response.getWriter().print(jsonlist);

@@ -3,6 +3,8 @@ package com.daoimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -102,7 +104,7 @@ public class UserDaoImpl implements UserDao{
 
 			Transaction transaction = session.beginTransaction();
 
-			User user  = (User) session.createQuery("from User where userName='"+name+"'");
+			User user  = (User) session.createQuery("from User where userName='"+name+"'").getSingleResult();
 
 			row = user.getId();
 			
@@ -142,6 +144,30 @@ public class UserDaoImpl implements UserDao{
 			ex.printStackTrace();
 		}
 		return allUser;
+	}
+
+	@Override
+	public User getUserById(Integer id) {
+		User user = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+
+			user  = session.get(User.class, id);
+			
+			transaction.commit();
+			System.out.println("Successfully fetched user id by name.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return user;
 	}
 
 }
