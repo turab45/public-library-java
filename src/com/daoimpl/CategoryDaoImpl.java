@@ -145,4 +145,29 @@ public class CategoryDaoImpl implements CategoryDao{
 		return allCategory;
 	}
 
+	@Override
+	public Category getCategoryById(Integer id) {
+		Category category = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+
+			category  = session.get(Category.class, id);
+
+			
+			transaction.commit();
+			System.out.println("Successfully fetched category by id.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return category;
+	}
+
 }

@@ -21,12 +21,18 @@ public class CategoryTransformer {
 		}
 		if (category.getCreatedBy() != null) {
 			categoryDTO.setCreatedBy(category.getCreatedBy().toString());
+		}else {
+			categoryDTO.setCreatedBy("--");
 		}
 		if (category.getUpdateDate() != null) {
 			categoryDTO.setUpdateDate(category.getUpdateDate().toString());
+		}else {
+			categoryDTO.setUpdateDate("--");
 		}
 		if (category.getUpdatedBy() != null) {
 			categoryDTO.setUpdatedBy(category.getUpdatedBy().toString());
+		}else {
+			categoryDTO.setUpdatedBy("--");
 		}
 		
 		return categoryDTO;

@@ -9,5 +9,6 @@ public interface CategoryDao {
 	public Integer updateCategory(Category category);
 	public Integer deleteCategory(Category category);
 	public Integer getCategoryIdByName(String name);
+	public Category getCategoryById(Integer id);
 	public List<Category> getAllCategory();
 }

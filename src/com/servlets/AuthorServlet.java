@@ -8,13 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.smartcardio.CardException;
 
 import com.dao.AuthorDao;
+import com.dao.CategoryDao;
 import com.daoimpl.AuthorDaoImpl;
+import com.daoimpl.CategoryDaoImpl;
 import com.dto.AuthorDTO;
+import com.dto.CategoryDTO;
 import com.google.gson.Gson;
 import com.models.Author;
+import com.models.Category;
 import com.transformers.AuthorTranformer;
+import com.transformers.CategoryTransformer;
 
 /**
  * Servlet implementation class AuthorServlet
@@ -25,6 +31,7 @@ public class AuthorServlet extends HttpServlet {
 	
 	AuthorDao authorDaoImpl = new AuthorDaoImpl();
     AuthorTranformer authorTranformer = new AuthorTranformer();
+    CategoryDao categoryDaoImpl = new CategoryDaoImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -114,6 +121,67 @@ public class AuthorServlet extends HttpServlet {
 			authorDTO = authorTranformer.toAuthorDTO(author);
 			
 			jsonlist = gson.toJson(authorDTO);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "create-category":
+			name = request.getParameter("name");
+			
+			Category category = new Category();
+			category.setCategoryName(name);
+			category.setStatus(1);
+			
+			categoryDaoImpl.addCategory(category);
+			
+			CategoryDTO categoryDTO = CategoryTransformer.toCategoryDTO(category);
+			
+			jsonlist = gson.toJson(categoryDTO);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "getAll-category":
+			List<CategoryDTO> allCategory = CategoryTransformer.tocategoryDTO(categoryDaoImpl.getAllCategory());
+			
+			
+			
+			
+			jsonlist = gson.toJson(allCategory);
+			
+			System.out.println(allCategory);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+		case "update-category":
+			id = Integer.parseInt(request.getParameter("id"));
+			name = request.getParameter("name");
+			
+			category = categoryDaoImpl.getCategoryById(id);
+			category.setCategoryName(name);
+			
+			categoryDaoImpl.updateCategory(category);
+			
+			categoryDTO = CategoryTransformer.toCategoryDTO(category);
+			jsonlist = gson.toJson(categoryDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+		case "delete-category":
+			id = Integer.parseInt(request.getParameter("id"));
+			
+			category = categoryDaoImpl.getCategoryById(id);
+			
+			categoryDaoImpl.deleteCategory(category);
+			
+			categoryDTO = CategoryTransformer.toCategoryDTO(category);
+			jsonlist = gson.toJson(categoryDTO);
+			
 			response.setContentType("application/json");
 			response.getWriter().print(jsonlist);
 			
