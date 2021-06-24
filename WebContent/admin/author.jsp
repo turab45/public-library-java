@@ -7,31 +7,13 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>Author</title>
-<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-<link rel="stylesheet" href="assets/fonts/material-icons.min.css">
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" integrity="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" integrity="">
+<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css" integrity="">
+<link rel="stylesheet" href="assets/fonts/ionicons.min.css" integrity="">
+<link rel="stylesheet" href="assets/fonts/material-icons.min.css" integrity="">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="" crossorigin="anonymous">
 	
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -52,7 +34,7 @@
 
 
 					<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#exampleModal" data-whatever="@mdo">New</button>
+						data-target="#exampleModal" data-whatever="@mdo"><b>NEW</b></button>
 					<div class="table-responsive-sm">
 						<table class="table">
 							<table class="table table-sm" id="authorTable">
@@ -89,22 +71,24 @@
 		</div>
 	</footer>
 	</div>
-	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
-		class="fas fa-angle-up"></i></a>
 	</div>
 
 
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
+<script src="bootstrap-alerts/jquery.bootstrap-growl.min.js" integrity=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js" integrity=""></script>
 
 	<script>
 		$(document).ready(function(){
 
 	
 			$('#updateBtn').hide();
-			$('.alert').alert('close')
+			
 
 			$.ajax({
 
@@ -112,15 +96,16 @@
 						type : 'GET',
 						success : function(data) {
 							for (var i = 0; i < data.length; i++) {
-								$('#authorTable').append('<tr id='+data[i].id+'><td data-target=name>'+ data[i].authorName+'</td><td data-target=publications>'+data[i].noOfPublications+ '</td><td>'+data[i].createdBy+ '</td><td>'+data[i].createDate+ '</td><td>'+data[i].updatedBy+ '</td><td data-target=publications>'+data[i].updateDate+ '</td><td> <a class="edit" data-id='+data[i].id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete" data-id='+data[i].id+' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+								$('#authorTable').append('<tr id='+data[i].id+'><td data-target=name>'+ data[i].authorName+'</td><td data-target=publications>'+data[i].noOfPublications+ '</td><td>'+data[i].createdBy+ '</td><td>'+data[i].createDate+ '</td><td>'+data[i].updatedBy+ '</td><td>'+data[i].updateDate+ '</td><td> <button type="button" data-id='+data[i].id+' class="edit btn btn-primary btn-sm">Edit</button><button id="deleteBtn" type="button" data-id='+data[i].id+' class="delete btn btn-danger btn-sm">Delete</button></td></tr>');
 
-								console.log(data[i].authorName);
+								//console.log(data[i].authorName);
 
 								}
 
 						}
 
 					});
+
 
 			$('#closeBtn').on('click', function(){
 				$('#author_form')[0].reset();
@@ -138,9 +123,18 @@
 					$('#exampleModal').modal('hide');
 					$('#author_form')[0].reset();
 					
-					$('#authorTable').append('<tr id='+data.id+'><td data-target=name>'+ data.authorName+'</td><td data-target=publications>'+data.noOfPublications+ '</td><td>'+data.createdBy+ '</td><td>'+data.createDate+ '</td><td>'+data.updatedBy+ '</td><td>'+data.updateDate+ '</td><td> <a class="edit" data-id='+data.id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete" data-id='+data.id+' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+					$('#authorTable').append('<tr id='+data.id+'><td data-target=name>'+ data.authorName+'</td><td data-target=publications>'+data.noOfPublications+ '</td><td>'+data.createdBy+ '</td><td>'+data.createDate+ '</td><td>'+data.updatedBy+ '</td><td>'+data.updateDate+ '</td><td> <button type="button" data-id='+data.id+' class="edit btn btn-primary btn-sm">Edit</button><button id="deleteBtn" type="button" data-id='+data.id+' class="delete btn btn-danger btn-sm">Delete</button></td></tr>');
 
-					$('.alert').alert()
+					$.bootstrapGrowl("Author has been added.", {
+						  ele: 'body', // which element to append to
+						  type: 'success', // (null, 'info', 'error', 'success')
+						  offset: {from: 'top', amount: 30}, // 'top', or 'bottom'
+						  align: 'center', // ('left', 'right', or 'center')
+						  width: 'auto', // (integer, or 'auto')
+						  delay: 4000,
+						  allow_dismiss: true,
+						  stackup_spacing: 10 // spacing between consecutively stacked growls.
+						});
 							
 							
 							
@@ -149,9 +143,117 @@
 
 				});
 		});
+
+
+
+		$(document).on('click', '.edit',function(){
+			$('#addBtn').hide();
+			$('#updateBtn').show();
 			
+					var currentRow = $(this).closest("tr");
+					
+
+					var id = $(this).data('id'); // get current row 1st TD value
+					var name = currentRow.find("td:eq(0)")
+							.text(); // get current row 2nd TD
+					var publications = currentRow.find(
+							"td:eq(1)").text(); // get current row 3rd TD
+
+					console.log('Name '+name)
+					console.log('Name '+publications)
+
+					$('#author_name').val(name);
+					$('#publications').val(publications);
+					
+					
+					$('#exampleModal').modal('show');
+
+					$(document).on('click','#updateBtn', function(){
+						name = $('#author_name').val();
+						publications = $('#publications').val();
+						$.ajax({
+							url:'../AuthorServletAdmin?action=update&&id='+id+'&&name='+name+'&&publications='+publications,
+							type: "POST",
+							success:function(data){
+
+								$('#exampleModal').modal('hide');
+								$('#author_form')[0].reset();
+								
+										$('#'+id).children('td[data-target=name]').text(data.authorName);
+										$('#'+id).children('td[data-target=publications]').text(data.noOfPublications);
+										$('#'+id).children('td[data-target=update-date]').text(data.updateDate);
+
+
+										$.bootstrapGrowl("Author has been updated.", {
+											  ele: 'body', // which element to append to
+											  type: 'success', // (null, 'info', 'error', 'success')
+											  offset: {from: 'top', amount: 30}, // 'top', or 'bottom'
+											  align: 'center', // ('left', 'right', or 'center')
+											  width: 'auto', // (integer, or 'auto')
+											  delay: 4000,
+											  allow_dismiss: true,
+											  stackup_spacing: 10 // spacing between consecutively stacked growls.
+											});
+										
+										
+										
+								},
+
+							});
+					});
+
 			});
+
+		$(document).on('click', '.delete',function(){
+			var id = $(this).data('id');
+			
+			bootbox.confirm({
+			    title: "Delete Author.",
+			    message: "Do you want to delete this author?.",
+			    buttons: {
+			        cancel: {
+			            label: '<i class="fa fa-times"></i> Cancel'
+			        },
+			        confirm: {
+			            label: '<i class="fa fa-check"></i> Confirm'
+			        }
+			    },
+			    callback: function (result) {
+			        if(result == true){
+			        	$.ajax({
+
+							url: '../AuthorServletAdmin?action=delete&&id='+id,
+							type: 'Post',
+							success:function(data, status){
+								if(status == 'success'){
+									
+									$('#'+id).remove();
+									$.bootstrapGrowl("Author has been deleted successfully.", {
+										  ele: 'body', // which element to append to
+										  type: 'success', // (null, 'info', 'error', 'success')
+										  offset: {from: 'top', amount: 30}, // 'top', or 'bottom'
+										  align: 'center', // ('left', 'right', or 'center')
+										  width: 'auto', // (integer, or 'auto')
+										  delay: 4000,
+										  allow_dismiss: true,
+										  stackup_spacing: 10 // spacing between consecutively stacked growls.
+										});
+									}
+					
+								}		
+
+							});
+				        }
+			    }
+			});
+			
+		
+			});
+		});
+
+		
 	</script>
+
 
 </body>
 </html>
@@ -197,11 +299,3 @@
 	</div>
 </div>
 
-<div class="fixed-top">
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-</div>

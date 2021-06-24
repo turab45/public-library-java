@@ -39,6 +39,8 @@ public class AuthorServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		
+		System.out.println("Action : "+action);
+		
 		Gson gson = new Gson();
 		String jsonlist = "";
 		
@@ -73,6 +75,43 @@ public class AuthorServlet extends HttpServlet {
 			
 			author = authorDaoImpl.getAuthorById(authorDaoImpl.getAuthorIdByName(name));
 			AuthorDTO authorDTO = authorTranformer.toAuthorDTO(author);
+			
+			jsonlist = gson.toJson(authorDTO);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "update":
+			id = Integer.parseInt(request.getParameter("id"));
+			
+			name = request.getParameter("name");
+			noOfPublications = Integer.parseInt(request.getParameter("publications"));
+			
+			author = authorDaoImpl.getAuthorById(id);
+			author.setAuthorName(name);
+			author.setNoOfPublications(noOfPublications);
+			
+			
+			authorDaoImpl.updateAuthor(author);
+			
+			
+			authorDTO = authorTranformer.toAuthorDTO(author);
+			
+			jsonlist = gson.toJson(authorDTO);
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+		case "delete":
+			id = Integer.parseInt(request.getParameter("id"));
+			
+			author = authorDaoImpl.getAuthorById(id);
+			
+			authorDaoImpl.deleteAuthor(author);
+			
+			
+			authorDTO = authorTranformer.toAuthorDTO(author);
 			
 			jsonlist = gson.toJson(authorDTO);
 			response.setContentType("application/json");
