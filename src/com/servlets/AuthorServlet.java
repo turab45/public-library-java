@@ -1,37 +1,47 @@
 package com.servlets;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.Case;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.smartcardio.CardException;
-
-import org.apache.catalina.valves.rewrite.RewriteCond;
 
 import com.dao.AuthorDao;
+import com.dao.BookDao;
 import com.dao.CategoryDao;
 import com.dao.UserDao;
 import com.daoimpl.AuthorDaoImpl;
+import com.daoimpl.BookDaoImpl;
 import com.daoimpl.CategoryDaoImpl;
 import com.daoimpl.UserDaoImpl;
 import com.dto.AuthorDTO;
+import com.dto.BookDTO;
 import com.dto.CategoryDTO;
 import com.dto.UserDTO;
 import com.google.gson.Gson;
 import com.models.Author;
+import com.models.Book;
 import com.models.Category;
 import com.models.User;
 import com.transformers.AuthorTranformer;
+import com.transformers.BookDtoTransformer;
 import com.transformers.CategoryTransformer;
 import com.transformers.UserTransformer;
 
 /**
  * Servlet implementation class AuthorServlet
  */
+@MultipartConfig
 @WebServlet("/AuthorServletAdmin")
 public class AuthorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +50,8 @@ public class AuthorServlet extends HttpServlet {
     AuthorTranformer authorTranformer = new AuthorTranformer();
     CategoryDao categoryDaoImpl = new CategoryDaoImpl();
     UserDao userDaoImpl = new UserDaoImpl();
+    BookDao bookDaoImpl = new BookDaoImpl();
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -266,7 +278,118 @@ public class AuthorServlet extends HttpServlet {
 			response.getWriter().print(jsonlist);
 			
 			break;
+		case "create-book":
 			
+			String title = request.getParameter("bookTitle");
+			Integer noOfCopies = Integer.parseInt(request.getParameter("noOfCopies"));
+			Double bookRent = Double.parseDouble(request.getParameter("bookRent"));
+			
+			author = authorDaoImpl.getAuthorById(authorDaoImpl.getAuthorIdByName(request.getParameter("author")));
+			category = categoryDaoImpl.getCategoryById(categoryDaoImpl.getCategoryIdByName(request.getParameter("category")));
+			javax.servlet.http.Part part = request.getPart("bookImg");
+			
+			String filename = part.getSubmittedFileName();
+			
+			Book book = new Book();
+			book.setTitle(title);
+			book.setNoOfCopies(noOfCopies);
+			book.setBookRent(bookRent);
+			book.setBookImg(filename);
+			book.setAuthor(author);
+			book.setCategory(category);
+			book.setStatus(1);
+			
+			bookDaoImpl.addBook(book);
+			
+			
+			
+			// upload...
+			// Read the file data
+			InputStream iStream = part.getInputStream();
+			byte []data = new byte[iStream.available()];
+			
+			iStream.read(data);
+			
+			String path = request.getRealPath("uploads")+File.separator+filename;
+			
+			System.out.println("Real Path Is : "+path);
+			
+			// write data
+			FileOutputStream fileOutputStream = new FileOutputStream(path);
+			fileOutputStream.write(data);
+			
+			
+			book = bookDaoImpl.getBookById(bookDaoImpl.getBookIdByName(book.getTitle()));
+			BookDTO bookDTO = BookDtoTransformer.toBookDTO(book);
+			
+			jsonlist = gson.toJson(bookDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+			
+		case "getAll-book":
+			List<BookDTO> allDtos = BookDtoTransformer.toBookDTO(bookDaoImpl.getAllBook());
+			
+			jsonlist = gson.toJson(allDtos);
+			System.out.println(jsonlist);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			
+			break;
+		case "update-book":
+			
+			book = bookDaoImpl.getBookById(Integer.parseInt(request.getParameter("id")));
+			
+			title = request.getParameter("bookTitle");
+			noOfCopies = Integer.parseInt(request.getParameter("noOfCopies"));
+			bookRent = Double.parseDouble(request.getParameter("bookRent"));
+			
+			author = authorDaoImpl.getAuthorById(authorDaoImpl.getAuthorIdByName(request.getParameter("author")));
+			category = categoryDaoImpl.getCategoryById(categoryDaoImpl.getCategoryIdByName(request.getParameter("category")));
+			
+			part = request.getPart("bookImg");
+			
+			filename = part.getSubmittedFileName();
+			
+			
+			book.setTitle(title);
+			book.setNoOfCopies(noOfCopies);
+			book.setBookRent(bookRent);
+			book.setBookImg(filename);
+			book.setAuthor(author);
+			book.setCategory(category);
+			book.setStatus(1);
+			
+			bookDaoImpl.updateBook(book);
+			
+			
+			
+			// upload...
+			// Read the file data
+			iStream = part.getInputStream();
+			data = new byte[iStream.available()];
+			
+			iStream.read(data);
+			
+			path = request.getRealPath("uploads")+File.separator+filename;
+			
+			System.out.println("Real Path Is : "+path);
+			
+			// write data
+			fileOutputStream = new FileOutputStream(path);
+			fileOutputStream.write(data);
+			
+			bookDTO = BookDtoTransformer.toBookDTO(book);
+			
+			jsonlist = gson.toJson(bookDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+
+			break;
 		}
 	}
 

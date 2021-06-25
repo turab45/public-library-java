@@ -144,4 +144,28 @@ public class BookDaoImpl implements BookDao{
 		return allBook;
 	}
 
+	@Override
+	public Book getBookById(Integer id) {
+		Book book = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+
+			book  = session.get(Book.class, id);
+
+			transaction.commit();
+			System.out.println("Successfully fetched book by id.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return book;
+	}
+
 }

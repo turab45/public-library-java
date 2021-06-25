@@ -83,6 +83,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="bootstrap-alerts/jquery.bootstrap-growl.min.js" integrity=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js" integrity=""></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js" integrity=""></script>
 
 	<script>
 		$(document).ready(function(){
@@ -114,6 +115,7 @@
 			});
 
 		$('#addBtn').on('click', function(){
+			
 			var name = $('#user_name').val();
 			var email = $('#user_email').val();
 			var password = $('#user_password').val();
@@ -157,8 +159,7 @@
 					
 
 					var id = $(this).data('id'); // get current row 1st TD value
-					var name = currentRow.find("td:eq(0)")
-							.text(); // get current row 2nd TD
+					var name = currentRow.find("td:eq(0)").text(); // get current row 2nd TD
 					var email = currentRow.find("td:eq(1)").text(); // get current row 3rd TD
 					var password = currentRow.find("td:eq(2)").text();
 	

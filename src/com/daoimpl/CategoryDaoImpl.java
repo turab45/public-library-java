@@ -103,7 +103,7 @@ public class CategoryDaoImpl implements CategoryDao{
 
 			Transaction transaction = session.beginTransaction();
 
-			Category category  = (Category) session.createQuery("from Category where category='"+name+"'");
+			Category category  = (Category) session.createQuery("from Category where category='"+name+"'").getSingleResult();
 
 			row = category.getId();
 			
