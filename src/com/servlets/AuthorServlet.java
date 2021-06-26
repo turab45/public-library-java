@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.Case;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -354,14 +355,22 @@ public class AuthorServlet extends HttpServlet {
 			
 			filename = part.getSubmittedFileName();
 			
+			System.out.println("Title : "+title);
+			System.out.println("No of Copies : "+noOfCopies);
+			System.out.println("book rent : "+bookRent);
+			System.out.println("author : "+author.getAuthorName());
+			System.out.println("category : "+category.getCategoryName());
 			
 			book.setTitle(title);
 			book.setNoOfCopies(noOfCopies);
 			book.setBookRent(bookRent);
-			book.setBookImg(filename);
 			book.setAuthor(author);
 			book.setCategory(category);
 			book.setStatus(1);
+			
+			if (filename != null) {
+				book.setBookImg(filename);
+			}
 			
 			bookDaoImpl.updateBook(book);
 			
@@ -389,6 +398,41 @@ public class AuthorServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(jsonlist);
 
+			break;
+		case "delete-book":
+			id = Integer.parseInt(request.getParameter("id"));
+	
+			book = bookDaoImpl.getBookById(id);
+			
+			bookDaoImpl.deleteBook(book);
+			
+			
+			bookDTO = BookDtoTransformer.toBookDTO(book);
+			
+			jsonlist = gson.toJson(bookDTO);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(jsonlist);
+			break;
+		case "admin-login":
+			email = request.getParameter("email");
+			password = request.getParameter("password");
+			
+			user = userDaoImpl.getUserByEmailandPassword(email, password);
+			System.out.println("User = "+user);
+			if (user != null) {
+				response.sendRedirect("/public-library/admin/book.jsp");
+				
+				return;
+			}else {
+				jsonlist = gson.toJson("error");
+				
+				response.setContentType("application/json");
+				response.getWriter().print(jsonlist);
+			}
+			//jsonlist = gson.toJson("error");
+			
+			
 			break;
 		}
 	}

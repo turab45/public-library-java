@@ -102,7 +102,7 @@ public class BookDaoImpl implements BookDao{
 
 			Transaction transaction = session.beginTransaction();
 
-			Book book  = (Book) session.createQuery("from Book where title='"+name+"'");
+			Book book  = (Book) session.createQuery("from Book b where b.title='"+name+"'").getSingleResult();
 
 			row = book.getBookId();
 			

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.jws.soap.SOAPBinding.Use;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -158,6 +159,34 @@ public class UserDaoImpl implements UserDao{
 
 			user  = session.get(User.class, id);
 			
+			transaction.commit();
+			System.out.println("Successfully fetched user id by name.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return user;
+	}
+
+	@Override
+	public User getUserByEmailandPassword(String email, String password) {
+		User user = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+			Query query = session.createQuery("from User where email=:e and password=:p");
+			query.setParameter("e", email);
+			query.setParameter("p", password);
+			
+			user  = (User) query.uniqueResult();
+
+		
 			transaction.commit();
 			System.out.println("Successfully fetched user id by name.");
 			

@@ -169,24 +169,10 @@
 																$('#exampleModal').modal('hide');
 																$('#author_form')[0].reset();
 
-																$('#authorTable')
-																		.append(
-																				'<tr id='+data.id+'><td data-target=name>'
-																						+ data.authorName
-																						+ '</td><td data-target=publications>'
-																						+ data.noOfPublications
-																						+ '</td><td>'
-																						+ data.createdBy
-																						+ '</td><td>'
-																						+ data.createDate
-																						+ '</td><td>'
-																						+ data.updatedBy
-																						+ '</td><td>'
-																						+ data.updateDate
-																						+ '</td><td> <button type="button" data-id='+data.id+' class="edit btn btn-primary btn-sm">Edit</button><button id="deleteBtn" type="button" data-id='+data.id+' class="delete btn btn-danger btn-sm">Delete</button></td></tr>');
+																$('#authorTable').append('<tr id='+data.bookId+'><td data-target=image><img src="../uploads/'+data.bookImg+'" width="60px" height="60px"></img></td><td data-target=title>'+ data.title+'</td><td data-target=author>'+data.author.authorName+ '</td><td data-target=category>'+data.category.categoryName+ '</td><td data-target=noOfCopies>'+data.noOfCopies+ '</td><td data-target=bookRent>'+data.bookRent+ '</td><td> <button type="button" data-id='+data.bookId+' class="edit btn btn-primary btn-sm">Edit</button><button id="deleteBtn" type="button" data-id='+data.bookId+' class="delete btn btn-danger btn-sm">Delete</button></td></tr>');
 
 																$.bootstrapGrowl(
-																				"Author has been added.",
+																				"Book has been added successfully.",
 																				{
 																					ele : 'body', // which element to append to
 																					type : 'success', // (null, 'info', 'error', 'success')
@@ -222,8 +208,7 @@
 												var noOfCopies = currentRow.find("td:eq(4)").text();
 												var rent = currentRow.find("td:eq(5)").text();
 												
-												console.log('title ' + title)
-												console.log('author '+ author)
+												
 
 												$('#book_title').val(title);
 												$('#book_rent').val(rent);
@@ -244,8 +229,7 @@
 																	category = $('#category option:selected').val();
 																	var fileToUpload = $('#fileUpload').prop('files')[0];
 
-																	console.log('author ' + author)
-																	console.log('category '+ category)
+																	
 																	
 																	var f = new FormData();
 																	f.append("id",id);
@@ -256,7 +240,8 @@
 																	f.append("category",category);
 																	f.append("bookImg",fileToUpload);
 																	
-																	$.ajax({url : '../AuthorServletAdmin?action=update-book',
+																	$.ajax({
+																		url : '../AuthorServletAdmin?action=update-book&&id='+id,
 																				type : "POST",
 																				data:f,
 																				success : function(data) {
@@ -264,14 +249,15 @@
 																					$('#exampleModal').modal('hide');
 																					$('#author_form')[0].reset();
 
+																					$('#'+ id).children('td[data-target=image]').html('<img src="../uploads/'+data.bookImg+'" width="60px" height="60px"></img>');
 																					$('#'+ id).children('td[data-target=title]').text(data.title);
-																					$('#'+ id).children('td[data-target=rent]').text(data.bookRent);
+																					$('#'+ id).children('td[data-target=bookRent]').text(data.bookRent);
 																					$('#'+ id).children('td[data-target=noOfCopies]').text(data.noOfCopies);
 																					$('#'+ id).children('td[data-target=author]').text(data.author.authorName);
 																					$('#'+ id).children('td[data-target=category]').text(data.category.categoryName);
 																					$('#'+ id).children('td[data-target=update-date]').text(data.updateDate);
 
-																					$.bootstrapGrowl("Author has been updated.",
+																					$.bootstrapGrowl("Book has been updated successfully.",
 																									{ele : 'body', // which element to append to
 																										type : 'success', // (null, 'info', 'error', 'success')
 																										offset : {
@@ -287,23 +273,20 @@
 																									});
 
 																				},
+																				processData: false,
+																				   contentType: false,
 
 																			});
 																});
 
 											});
 
-							$(document)
-									.on(
-											'click',
-											'.delete',
-											function() {
+							$(document).on('click','.delete',function() {
 												var id = $(this).data('id');
 
-												bootbox
-														.confirm({
-															title : "Delete Author.",
-															message : "Do you want to delete this author?.",
+												bootbox.confirm({
+															title : "Delete Book.",
+															message : "Do you want to delete this book?.",
 															buttons : {
 																cancel : {
 																	label : '<i class="fa fa-times"></i> Cancel'
@@ -312,27 +295,17 @@
 																	label : '<i class="fa fa-check"></i> Confirm'
 																}
 															},
-															callback : function(
-																	result) {
+															callback : function(result) {
 																if (result == true) {
-																	$
-																			.ajax({
-
-																				url : '../AuthorServletAdmin?action=delete&&id='
-																						+ id,
+																	$.ajax({
+																		url : '../AuthorServletAdmin?action=delete-book&&id='+ id,
 																				type : 'Post',
-																				success : function(
-																						data,
-																						status) {
+																				success : function(data,status) {
 																					if (status == 'success') {
 
-																						$(
-																								'#'
-																										+ id)
-																								.remove();
-																						$
-																								.bootstrapGrowl(
-																										"Author has been deleted successfully.",
+																						$('#'+ id).remove();
+																						$.bootstrapGrowl(
+																										"Book has been deleted successfully.",
 																										{
 																											ele : 'body', // which element to append to
 																											type : 'success', // (null, 'info', 'error', 'success')
