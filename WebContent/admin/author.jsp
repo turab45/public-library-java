@@ -1,3 +1,4 @@
+<%@page import="com.models.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,11 @@
 
 </head>
 <body>
+<%
+User u = (User) session.getAttribute("user");
+if(u != null){
+	
+%>
 
 	<div id="wrapper">
 
@@ -298,4 +304,8 @@
 		</div>
 	</div>
 </div>
+<%}else{
+	response.sendRedirect("login.jsp");
+}%>
+
 

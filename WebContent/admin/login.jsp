@@ -61,8 +61,7 @@ $(document).ready(function(){
 			success: function(data){
 				if(data === 'error'){
 					console.log('inside error')
-					$.bootstrapGrowl(
-							"Incorrect username and password.",
+					$.bootstrapGrowl("Incorrect username and password.",
 							{
 								ele : 'body', // which element to append to
 								type : 'info', // (null, 'info', 'error', 'success')
@@ -77,6 +76,8 @@ $(document).ready(function(){
 								stackup_spacing : 10
 							// spacing between consecutively stacked growls.
 							});
+					}else {
+						window.location="index.jsp";
 					}
 				
 				},

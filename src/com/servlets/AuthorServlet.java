@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dao.AuthorDao;
 import com.dao.BookDao;
@@ -421,23 +423,34 @@ public class AuthorServlet extends HttpServlet {
 			user = userDaoImpl.getUserByEmailandPassword(email, password);
 			System.out.println("User = "+user);
 			if (user != null) {
-				response.sendRedirect("/public-library/admin/book.jsp");
-				
-				return;
+				HttpSession session = request.getSession();
+				session.setAttribute("user", user);
 			}else {
 				jsonlist = gson.toJson("error");
 				
 				response.setContentType("application/json");
 				response.getWriter().print(jsonlist);
-			}
+			}//http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4552545
 			//jsonlist = gson.toJson("error");
+			
+			
+			break;
+		case "logout":
+			
+				HttpSession session = request.getSession();
+				session.invalidate();
+				
+				jsonlist = gson.toJson("success");
+				
+				response.setContentType("application/json");
+				response.getWriter().print(jsonlist);
 			
 			
 			break;
 		}
 	}
 
-	/**
+	/**https://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4552545
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -168,4 +168,30 @@ public class BookDaoImpl implements BookDao{
 		return book;
 	}
 
+	@Override
+	public Integer getAllBookUsingCount() {
+		Integer number = null;
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+			
+			int status = 1;
+			number = Integer.parseInt(session.createQuery("select sum(b.noOfCopies) from Book b where b.status='"+status+"'").getSingleResult().toString());
+
+			
+			transaction.commit();
+			System.out.println("Successfully fetched all books.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return number;
+	}
+
 }
