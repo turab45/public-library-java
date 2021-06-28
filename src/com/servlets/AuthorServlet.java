@@ -430,8 +430,7 @@ public class AuthorServlet extends HttpServlet {
 				
 				response.setContentType("application/json");
 				response.getWriter().print(jsonlist);
-			}//http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4552545
-			//jsonlist = gson.toJson("error");
+			}
 			
 			
 			break;
