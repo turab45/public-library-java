@@ -12,4 +12,5 @@ public interface BookDao {
 	public Book getBookById(Integer id);
 	public List<Book> getAllBook();
 	public Integer getAllBookUsingCount();
+	public List<Book> getAllBookofCategory(Integer categoryId);
 }

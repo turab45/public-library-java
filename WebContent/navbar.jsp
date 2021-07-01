@@ -61,7 +61,7 @@
 								<li><a href="index.jsp" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Rent<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Books</a></li> 
+                                        <li><a href="shop.jsp">Books</a></li> 
 										<li><a href="checkout.html">Checkout</a></li> 
 										<li><a href="cart.html">Cart</a></li> 
                                     </ul>

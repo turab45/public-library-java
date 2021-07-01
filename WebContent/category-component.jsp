@@ -22,7 +22,7 @@
 							<% for(Category category: alCategories){ %>
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#" id='category'><%=category.getCategoryName() %></a></h4>
+									<h4 class="panel-title"><a href="selected-category.jsp?category=<%=category.getCategoryName()%>" id='category'><%=category.getCategoryName() %></a></h4>
 								</div>
 							</div>
 							

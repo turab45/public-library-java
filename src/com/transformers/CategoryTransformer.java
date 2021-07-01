@@ -16,6 +16,9 @@ public class CategoryTransformer {
 		if (category.getCategoryName() != null) {
 			categoryDTO.setCategoryName(category.getCategoryName());
 		}
+		if (category.getBooks() != null) {
+			categoryDTO.setBookDTOs(BookDtoTransformer.toBookDTO(category.getBooks()));
+		}
 		if (category.getCreateDate() != null) {
 			categoryDTO.setCreateDate(category.getCreateDate().toString());
 		}
