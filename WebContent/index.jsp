@@ -55,7 +55,7 @@
 				
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Features Books</h2>
+						<h2 class="title text-center">Featured Books</h2>
 						
 						<% for(int i=0; i<9; i++){ %>
 						<!-- Book card start -->
