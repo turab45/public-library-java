@@ -79,7 +79,7 @@
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
 										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='addToWishlist'><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li>
+										<li><a style="cursor: pointer;" href="book-details.jsp?id=<%=allBooks.get(i).getBookId() %>" id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li>
 									</ul>
 								</div>
 							</div>
@@ -117,7 +117,7 @@
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
 										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='addToWishlist'><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li>
+										<li><a style="cursor: pointer;" href="book-details.jsp?id=<%=allBooks.get(i).getBookId() %>" id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li>
 									</ul>
 								</div>
 							</div>
