@@ -24,9 +24,6 @@ public class Category extends AbstractEntity implements Serializable{
 	@Column(name = "category")
 	private String categoryName;
 	
-	@OneToMany(mappedBy="category")
-	private List<Book> books;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -38,12 +35,6 @@ public class Category extends AbstractEntity implements Serializable{
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
-	}
-	public List<Book> getBooks() {
-		return books;
-	}
-	public void setBooks(List<Book> books) {
-		this.books = books;
 	}
 	
 	

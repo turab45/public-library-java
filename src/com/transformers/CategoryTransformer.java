@@ -16,9 +16,6 @@ public class CategoryTransformer {
 		if (category.getCategoryName() != null) {
 			categoryDTO.setCategoryName(category.getCategoryName());
 		}
-		if (category.getBooks() != null) {
-			categoryDTO.setBookDTOs(BookDtoTransformer.toBookDTO(category.getBooks()));
-		}
 		if (category.getCreateDate() != null) {
 			categoryDTO.setCreateDate(category.getCreateDate().toString());
 		}
@@ -41,7 +38,7 @@ public class CategoryTransformer {
 		return categoryDTO;
 	}
 	
-	public static List<CategoryDTO> tocategoryDTO(List<Category> categorys) {
+	public static List<CategoryDTO> toCategoryDTO(List<Category> categorys) {
 		List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
 		
 		for(Category category : categorys) {

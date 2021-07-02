@@ -7,6 +7,7 @@ public class CategoryDTO extends AbstractEntityDTO{
 	private String id;
 	private String categoryName;
 	private List<BookDTO> bookDTOs;
+	
 	public String getId() {
 		return id;
 	}

@@ -22,7 +22,7 @@
 							<% for(Category category: alCategories){ %>
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title"><a href="selected-category.jsp?category=<%=category.getCategoryName()%>" id='category'><%=category.getCategoryName() %></a></h4>
+									<h4 class="panel-title"><a href="selected-category.jsp?category-id=<%=category.getId()%>" id='category'><%=category.getCategoryName() %></a></h4>
 								</div>
 							</div>
 							
@@ -35,7 +35,7 @@
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
 								<%for(Author author: alAuthor){ %>
-									<li><a href="#"> <span class="pull-right">(<%=author.getNoOfPublications() %>)</span><%=author.getAuthorName() %></a></li>
+									<li><a href="selected-author.jsp?author-id=<%=author.getId()%>"> <span class="pull-right">(<%=author.getNoOfPublications() %>)</span><%=author.getAuthorName() %></a></li>
 								<%} %>
 								</ul>
 							</div>

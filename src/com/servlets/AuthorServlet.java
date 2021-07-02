@@ -167,7 +167,7 @@ public class AuthorServlet extends HttpServlet {
 			break;
 			
 		case "getAll-category":
-			List<CategoryDTO> allCategory = CategoryTransformer.tocategoryDTO(categoryDaoImpl.getAllCategory());
+			List<CategoryDTO> allCategory = CategoryTransformer.toCategoryDTO(categoryDaoImpl.getAllCategory());
 			
 			
 			

@@ -28,16 +28,25 @@
 <body>
 
 <%
-	String categoryName = request.getParameter("category");
+	Integer categoryId = Integer.parseInt(request.getParameter("category-id"));
+
+	System.out.println("Category id from request: "+categoryId);
 
 	BookDao bookDaoImpl = new BookDaoImpl();
 	CategoryDao categoryDaoImpl = new CategoryDaoImpl();
 	
-	Category category = categoryDaoImpl.getCategoryById(categoryDaoImpl.getCategoryIdByName(categoryName));
+	//Category category = categoryDaoImpl.getCategoryById(categoryDaoImpl.getCategoryIdByName(categoryName));
 	
-	System.out.println(category.getCategoryName());
+// 	System.out.println(category.getCategoryName());
 	
-		System.out.println("Size of books = "+category.getBooks());
+ 	List<Book> allBooks = bookDaoImpl.getAllBookofCategory(categoryId);
+ 	
+	
+ 	System.out.println("All book of category : "+categoryId);
+	
+ 	for(Book b : allBooks){
+ 		System.out.println(b.getTitle());
+ 	}
 
 
 	//CategoryDTO categoryDTO = CategoryTransformer.toCategoryDTO(category);
@@ -53,70 +62,67 @@
 	
 	
 	
-<!-- 	<section> -->
-<!-- 		<div class="container"> -->
-<%-- 		<%if(categoryDTO.getBookDTOs().size() != 0){ %> --%>
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-sm-3"> -->
-<!-- 					<div class="left-sidebar"> -->
+ 	<section>
+		<div class="container">
+		
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
 						
-<%-- 					<jsp:include page="category-component.jsp" /> --%>
+					<jsp:include page="category-component.jsp" />
 						
-<!-- 						<div class="shipping text-center">shipping -->
-<!-- 							<img src="images/home/shipping.jpg" alt="" /> -->
-<!-- 						</div>/shipping -->
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="" />
+						</div><!--/shipping-->
 					
-<!-- 					</div> -->
-<!-- 				</div> -->
-				
-<!-- 				<div class="col-sm-9 padding-right"> -->
-<!-- 					<div class="features_items">features_items -->
-<!-- 						<h2 class="title text-center">Books</h2> -->
+					</div>
+				</div>
+				<%if(allBooks.size() != 0){ %>
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Books</h2>
 						
-<%-- 						<% for(int i=0; i<categoryDTO.getBookDTOs().size(); i++){ %> --%>
-<!-- 						Book card start -->
-<!-- 						<div class="col-sm-4"> -->
-<!-- 							<div class="product-image-wrapper"> -->
-<!-- 								<div class="single-products"> -->
-<!-- 										<div class="productinfo text-center"> -->
-<%-- 											<img src="uploads/<%=categoryDTO.getBookDTOs().get(i).getBookImg() %>" alt="" style="width: 210px;height: 250px;"/> --%>
-<%-- 											<h2>Rs: <%=categoryDTO.getBookDTOs().get(i).getBookRent() %></h2> --%>
-<%-- 											<p><%=categoryDTO.getBookDTOs().get(i).getTitle() %></p> --%>
-<%-- 											<button data-id='<%=categoryDTO.getBookDTOs().get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button> --%>
+						<% for(int i=0; i<allBooks.size(); i++){ %>
+						<!-- Book card start -->
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="uploads/<%=allBooks.get(i).getBookImg() %>" alt="" style="width: 210px;height: 250px;"/>
+											<h2>Rs: <%=allBooks.get(i).getBookRent() %></h2>
+											<p><%=allBooks.get(i).getTitle() %></p>
+											<button data-id='<%=allBooks.get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+										</div>
+<!-- 										<div class="product-overlay"> -->
+<!-- 											<div class="overlay-content"> -->
+<%-- 												<h2>Rs: <%=allBooks.get(i).getBookRent() %></h2> --%>
+<%-- 												<p><%=allBooks.get(i).getTitle() %></p> --%>
+<%-- 												<button data-id='<%=allBooks.get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button> --%>
+<!-- 											</div> -->
 <!-- 										</div> -->
-<!-- <!-- 										<div class="product-overlay"> --> -->
-<!-- <!-- 											<div class="overlay-content"> --> -->
-<%-- <%-- 												<h2>Rs: <%=allBooks.get(i).getBookRent() %></h2> --%> --%>
-<%-- <%-- 												<p><%=allBooks.get(i).getTitle() %></p> --%> --%>
-<%-- <%-- 												<button data-id='<%=allBooks.get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button> --%> --%>
-<!-- <!-- 											</div> --> -->
-<!-- <!-- 										</div> --> -->
-<!-- 								</div> -->
-<!-- 								<div class="choose"> -->
-<!-- 									<ul class="nav nav-pills nav-justified"> -->
-<%-- 										<li><a style="cursor: pointer;" data-id='<%=categoryDTO.getBookDTOs().get(i).getBookId() %>' id='addToWishlist'><i class="fa fa-plus-square"></i>Add to wishlist</a></li> --%>
-<%-- 										<li><a style="cursor: pointer;" data-id='<%=categoryDTO.getBookDTOs().get(i).getBookId() %>' id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li> --%>
-<!-- 									</ul> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- <!-- 						Book card end --> -->
-<%-- 						<%} %> --%>
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='addToWishlist'><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+										<li><a style="cursor: pointer;" data-id='<%=allBooks.get(i).getBookId() %>' id='viewDetails'><i class="fa fa-plus-circle"></i>View Details</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+<!-- 						Book card end -->
+						<%} %>
 					
-<!-- 					</div>features_items -->
+					</div><!--features_items-->
 					
 				
 					
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 			<%}else{ %> --%>
-<!-- 			<div class="container"> -->
-<!-- 			<h2>No Books in this category</h2> -->
-<!-- 			</div> -->
-			
-<%-- 			<%} %> --%>
-<!-- 		</div> -->
-<!-- 	</section> -->
+				</div>
+			</div>
+			<%}else{ %>
+			<h2>No Books in this category.</h2>
+			<%} %>
+		</div>
+	</section>
 	
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">

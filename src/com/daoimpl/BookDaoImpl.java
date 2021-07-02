@@ -205,11 +205,37 @@ public class BookDaoImpl implements BookDao{
 			Transaction transaction = session.beginTransaction();
 			
 			int status = 1;
-			allBook =  session.createQuery("from Book where status='"+status+"' and category='"+categoryId+"'").list();
+			allBook =  session.createQuery("from Book where status='"+status+"' and category.id='"+categoryId+"'").list();
 
 			
 			transaction.commit();
 			System.out.println("Successfully fetched all books.");
+			
+			session.close();
+
+		} catch (Exception ex) {
+			System.out.println("ERROR: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		return allBook;
+	}
+
+	@Override
+	public List<Book> getAllBookofAuthor(Integer authorId) {
+		List<Book> allBook = new ArrayList<Book>();
+		try {
+			
+			SessionFactory factory = Database.getConnection();
+			Session session = factory.openSession();
+
+			Transaction transaction = session.beginTransaction();
+			
+			int status = 1;
+			allBook =  session.createQuery("from Book where status='"+status+"' and author.id='"+authorId+"'").list();
+
+			
+			transaction.commit();
+			System.out.println("Successfully fetched all books of an author.");
 			
 			session.close();
 

@@ -142,7 +142,7 @@ public class AdminServlet extends HttpServlet {
 		case "getAllCategories":
 			List<Category> categories = categoryDaoImpl.getAllCategory();
 
-			List<CategoryDTO> categoryDTOs = CategoryTransformer.tocategoryDTO(categories);
+			List<CategoryDTO> categoryDTOs = CategoryTransformer.toCategoryDTO(categories);
 			
 			
 			List<String> categoriesFormatted = new ArrayList<String>();

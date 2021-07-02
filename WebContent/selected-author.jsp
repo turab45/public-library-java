@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@page import="com.transformers.CategoryTransformer"%>
+<%@page import="com.dto.CategoryDTO"%>
+<%@page import="com.models.Category"%>
+<%@page import="com.daoimpl.CategoryDaoImpl"%>
+<%@page import="com.dao.CategoryDao"%>
 <%@page import="com.models.Book"%>
 <%@page import="java.util.List"%>
 <%@page import="com.daoimpl.BookDaoImpl"%>
@@ -9,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Books | Public Library</title>
+    <title>Author Books | Public Library</title>
      
      <jsp:include page="allCss.jsp" />
      
@@ -23,9 +28,16 @@
 <body>
 
 <%
-	BookDao bookDaoImpl = new BookDaoImpl();
+	Integer authorId = Integer.parseInt(request.getParameter("author-id"));
 
-	List<Book> allBooks = bookDaoImpl.getAllBook();
+	System.out.println("Author id from request: "+authorId);
+
+	BookDao bookDaoImpl = new BookDaoImpl();
+	CategoryDao categoryDaoImpl = new CategoryDaoImpl();
+	
+ 	List<Book> allBooks = bookDaoImpl.getAllBookofAuthor(authorId);
+
+
 
 %>
 
@@ -38,8 +50,9 @@
 	
 	
 	
-	<section>
+ 	<section>
 		<div class="container">
+		
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="left-sidebar">
@@ -52,7 +65,7 @@
 					
 					</div>
 				</div>
-				
+				<%if(allBooks.size() != 0){ %>
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">Books</h2>
@@ -87,13 +100,15 @@
 <!-- 						Book card end -->
 						<%} %>
 					
-					</div>
-					<!--features_items-->
+					</div><!--features_items-->
 					
 				
 					
 				</div>
 			</div>
+			<%}else{ %>
+			<h2>Author has no books.</h2>
+			<%} %>
 		</div>
 	</section>
 	
