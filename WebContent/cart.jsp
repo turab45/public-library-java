@@ -168,13 +168,11 @@ $(document).ready(function(){
 		var allCartItems = $('.cart_books');
 		
 		for(var i=0; i<allCartItems.length; i++){
-			var cart_price = parseFloat(document.getElementsByClassName('cart_books')[0].getElementsByClassName('cart_total_price')[0].innerText.replace('Rs:','').trim());
+			var cart_price = parseFloat(document.getElementsByClassName('cart_books')[0].getElementsByClassName('cart_price')[0].innerText.replace('Rs:','').trim());
 			total = total+cart_price;
 		}
 
 		document.getElementsByClassName('cart_sub_total')[0].firstElementChild.innerText = "Rs: "+total;
-		document.getElementsByClassName('cart_tax')[0].firstElementChild.innerText = "Rs: 10";
-		document.getElementsByClassName('cart_shipping_cost')[0].firstElementChild.innerText = "Rs: 10";
 		document.getElementsByClassName('cart_final_total')[0].firstElementChild.innerText = "Rs: "+(total+10+10);
 		console.log(total)
 	}
@@ -198,8 +196,9 @@ $(document).ready(function(){
 				
 				
 				var quantity = parseFloat(value);
-				console.log(parentElement.children.item(4).firstElementChild);
-				parentElement.children.item(4).firstElementChild.innerText = "Rs: "+(quantity * cart_price);
+				console.log(parentElement.getElementsByClassName('cart_total_price')[0]);
+				parentElement.getElementsByClassName('cart_total_price')[0].innerText = "Rs: "+(quantity * cart_price);
+				//parentElement.children.item(4).firstElementChild.innerText = "Rs: "+(quantity * cart_price);
 
 				upgradeTotal();
 			}
