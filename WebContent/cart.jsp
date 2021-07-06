@@ -90,7 +90,7 @@
 								<p class="cart_total_price">Rs: 59</p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+								<button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button>
 							</td>
 						</tr>
 						<tr class='cart_books'>
@@ -154,13 +154,75 @@
 
     <script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
    
     
-<script type="text/javascript">
+<script type="text/javascript" async="async">
+if(document.readyState == 'loading'){
+	document.addEventListener('DOMContentLoaded',ready);
+}else{
+	ready();
+}
 
-$(document).ready(function(){
+function ready(){
+	updateTotal();
+
+	var removeCartItemButtons = document.getElementsByClassName('cart-delete');
+
+	for (var i = 0; i < removeCartItemButtons.length; i++) {
+		var button = removeCartItemButtons[i];
+		button.addEventListener('click', removeCartItem);
+	}
+
+	var quantityInputs = document.getElementsByClassName('cart_quantity_input');
+	for (var i = 0; i < quantityInputs.length; i++) {
+		var input = quantityInputs[i];
+		input.addEventListener('change', changeQuantity);
+	}
+}
+
+function removeCartItem(event){
+	var buttonClicked = event.target.parentElement.parentElement.parentElement;
+	buttonClicked.remove();
+	updateTotal();
+}
+
+function changeQuantity(event){
+	var input = event.target;
+
+	if (isNaN(input.value) || input.value <=0) {
+		input.value = 1;
+	}else{
+		var productTotalElement = input.parentElement.parentElement.parentElement.getElementsByClassName('cart_price')[0];
+		var productTotalElementPrice = parseFloat(productTotalElement.innerText.replace('Rs:','').trim());
+		var total = productTotalElementPrice * input.value;
+
+		input.parentElement.parentElement.parentElement.getElementsByClassName('cart_total_price')[0].innerText = "Rs: "+total;
+
+		updateTotal();
+	}
+}
+
+
+
+
+function updateTotal(){
+	var cartItems = document.getElementsByClassName('cart_books');
+	var total = 0;
+	for (var i = 0; i < cartItems.length; i++) {
+		var currentRow = cartItems[i];
+		var priceOfCurrent = parseFloat(currentRow.getElementsByClassName('cart_total')[0].children[0].innerText.replace('Rs:','').trim());
+
+		total+= priceOfCurrent;
+		
+		
+	}
+	var cartSubTotal = document.getElementsByClassName('cart_sub_total');
+	cartSubTotal[0].children[0].innerText = 'Rs: '+total;
+
+	document.getElementsByClassName('cart_final_total')[0].children[0].innerText = 'Rs: '+(total+20);
+}
+
+/* $(document).ready(function(){
 	upgradeTotal();
 
 	function upgradeTotal(){
@@ -211,7 +273,7 @@ $(document).ready(function(){
 		this.parentNode.parentNode.remove();
 		upgradeTotal();
 		});
-});
+}); */
 </script>
 </body>
 </html>
