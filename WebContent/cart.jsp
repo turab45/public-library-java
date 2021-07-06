@@ -42,80 +42,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class='cart_books'>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>Rs: 59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									
-									<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" size="2">
-									
-								</div>
-							</td>
-							<td class="cart_total" style="width: 150px">
-								<p class="cart_total_price">Rs: 59</p>
-							</td>
-							<td class="cart_delete">
-								<button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button>
-							</td>
-						</tr>
+						
 
-						<tr class='cart_books'>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/two.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>Rs: 59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									
-									<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" size="2">
-									
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">Rs: 59</p>
-							</td>
-							<td class="cart_delete">
-								<button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button>
-							</td>
-						</tr>
-						<tr class='cart_books'>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>Rs: 59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" size="2">
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">Rs: 59</p>
-							</td>
-							<td class="cart_delete">
-								<button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button>
-							</td>
-						</tr>
+						
+						
 					</tbody>
 				</table>
 			</div>
@@ -164,6 +94,7 @@ if(document.readyState == 'loading'){
 }
 
 function ready(){
+	fillOutCart();
 	updateTotal();
 
 	var removeCartItemButtons = document.getElementsByClassName('cart-delete');
@@ -220,6 +151,44 @@ function updateTotal(){
 	cartSubTotal[0].children[0].innerText = 'Rs: '+total;
 
 	document.getElementsByClassName('cart_final_total')[0].children[0].innerText = 'Rs: '+(total+20);
+}
+
+function fillOutCart(){
+
+	var allBooks = localStorage.getItem("cart-books");
+
+	if (allBooks != null) {
+
+		for (var i = 0; i < allBooks.length; i++) {
+
+				var rowContent = '<tr class="cart_books"><td class="cart_product">
+					<a href=""><img src=""" alt=""></a>
+					</td>
+					<td class="cart_description">
+						<h4><a href="">Colorblock Scuba</a></h4>
+						<p>${allBooks[i].bookId}</p>
+					</td>
+					<td class="cart_price">
+						<p>${allBook[i]}</p>
+					</td>
+					<td class="cart_quantity">
+						<div class="cart_quantity_button">
+							
+							<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" size="2">
+							
+						</div>
+					</td>
+					<td class="cart_total" style="width: 150px">
+						<p class="cart_total_price">${allBooks[i]}</p>
+					</td><td class="cart_delete"><button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button></td></tr>`;
+
+			
+			document.getElementsByClassName('table')[0].getElementsByTagName('tbody')[0].innerHTML= rowContent;
+		}
+	}
+	
+	
+	
 }
 
 /* $(document).ready(function(){
