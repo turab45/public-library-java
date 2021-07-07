@@ -63,9 +63,9 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="uploads/<%=allBooks.get(i).getBookImg() %>" alt="" style="width: 210px;height: 250px;"/>
-											<h2>Rs: <%=allBooks.get(i).getBookRent() %></h2>
-											<p><%=allBooks.get(i).getTitle() %></p>
+											<img src="uploads/<%=allBooks.get(i).getBookImg() %>" class="book-image" alt="" style="width: 210px;height: 250px;"/>
+											<h2 class="book-rent">Rs: <%=allBooks.get(i).getBookRent() %></h2>
+											<p class="book-title"><%=allBooks.get(i).getTitle() %></p>
 											<button data-id='<%=allBooks.get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
 										</div>
 <!-- 										<div class="product-overlay"> -->
@@ -101,7 +101,7 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="uploads/<%=allBooks.get(i).getBookImg() %>" alt="" style="width: 210px;height: 250px;"/>
+											<img src="uploads/<%=allBooks.get(i).getBookImg() %>" class="book-image" alt="" style="width: 210px;height: 250px;"/>
 											<h2>Rs: <%=allBooks.get(i).getBookRent() %></h2>
 											<p><%=allBooks.get(i).getTitle() %></p>
 											<button data-id='<%=allBooks.get(i).getBookId() %>' id="addToCart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
@@ -140,6 +140,6 @@
   
     <script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/shop.js" async></script>
 </body>
 </html>

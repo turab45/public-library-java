@@ -155,35 +155,45 @@ function updateTotal(){
 
 function fillOutCart(){
 
-	var allBooks = localStorage.getItem("cart-books");
+	var allBooks =JSON.parse(localStorage.getItem("cart-books"));
 
 	if (allBooks != null) {
 
 		for (var i = 0; i < allBooks.length; i++) {
-
-				var rowContent = '<tr class="cart_books"><td class="cart_product">
-					<a href=""><img src=""" alt=""></a>
+			
+			console.log(allBooks[i].bookQuantity);
+			console.log(allBooks[i].bookRent);
+			
+				var rowContent = `<td class="cart_product">
+					<a href=""><img src=\${allBooks[i].bookImg} alt="" style="height: 71px; width:60px"></a>
 					</td>
 					<td class="cart_description">
-						<h4><a href="">Colorblock Scuba</a></h4>
-						<p>${allBooks[i].bookId}</p>
+						<h4 style="margin-left:50px;"><a href="">\${allBooks[i].bookTitle}</a></h4>
+						<p style="margin-left:50px;">\${allBooks[i].bookId}</p>
 					</td>
 					<td class="cart_price">
-						<p>${allBook[i]}</p>
+						<p>\${allBooks[i].bookRent}</p>
 					</td>
 					<td class="cart_quantity">
 						<div class="cart_quantity_button">
 							
-							<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" size="2">
+							<input class="cart_quantity_input" type="number" name="quantity" value=\${allBooks[i].bookQuantity} autocomplete="off" size="2">
 							
 						</div>
 					</td>
-					<td class="cart_total" style="width: 150px">
-						<p class="cart_total_price">${allBooks[i]}</p>
-					</td><td class="cart_delete"><button class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button></td></tr>`;
+					<td class="cart_total">
+						<p class="cart_total_price">\${parseFloat(allBooks[i].bookRent.replace('Rs:','').trim()) * parseFloat(allBooks[i].bookQuantity)}</p>
+					</td><td class="cart_delete"><button style="margin-right:10px" class="btn-danger cart-delete" href=""><i class="fa fa-times"></i></button></td>`;
 
-			
-			document.getElementsByClassName('table')[0].getElementsByTagName('tbody')[0].innerHTML= rowContent;
+					
+					var tableRef = document.getElementsByClassName('table')[0].getElementsByTagName('tbody')[0];
+
+					var newRow = tableRef.insertRow(tableRef.rows.length);
+					newRow.setAttribute('class', 'cart_books');
+					newRow.innerHTML = rowContent;
+
+					updateTotal();
+			//document.getElementsByClassName('table')[0].getElementsByTagName('tbody')[0].append(rowContent);
 		}
 	}
 	
